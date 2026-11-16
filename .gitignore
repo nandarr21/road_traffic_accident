@@ -15,4 +15,4 @@ Thumbs.db
 *.docx
 ~$*
 requirements-lock.txt
-static/
+/static/
