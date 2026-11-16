@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block title %}Evaluasi Model{% endblock %}
+{% block heading %}Evaluasi Model{% endblock %}
+{% block subheading %}Perbandingan {{ evaluasi | length }} model Decision Tree pada data latih, cross-validation, dan data uji{% endblock %}
+
+{% block content %}
+{% set n = evaluasi | length %}
+
+<!-- ============ Kartu ringkas tiap model ============ -->
+<div class="row g-3 mb-3">
+  {% for e in evaluasi %}
+  <div class="col-md-6 col-xl-4">
+    <div class="panel model-card h-100 {{ 'chosen' if e.slug == slug_terpilih }}">
+      <div class="panel-head">
+        <h2><span class="dot-model-{{ warna_model[e.slug] }}"></span>{{ e.nama }}</h2>
+        {% if e.slug == slug_terpilih %}<span class="badge-green"><i class="bi bi-check2-circle"></i> Dipakai aplikasi</span>{% endif %}
+      </div>
+      <div class="row g-2 text-center">
+        <div class="col-4"><div class="kpi"><span>Balanced acc.</span><strong>{{ e.test.balanced_accuracy | persen }}</strong></div></div>
+        <div class="col-4"><div class="kpi"><span>Macro F1</span><strong>{{ e.test.f1_macro | angka(3) }}</strong></div></div>
+        <div class="col-4"><div class="kpi"><span>Recall Fatal</span><strong>{{ e.test['recall_Fatal injury'] | persen(0) }}</strong></div></div>
+      </div>
+      <p class="small muted mb-1 mt-2">
+        {{ e.params.criterion }} · max_depth={{ e.params.max_depth if e.params.max_depth is not none else 'None' }}
+        · split={{ e.params.min_samples_split }} · leaf={{ e.params.min_samples_leaf }}
+      </p>
+      <p class="small mb-0">
+        Kedalaman {{ e.kedalaman }} · {{ e.jumlah_daun | ribuan }} daun ·
+        overfitting: <span class="of-{{ e.overfitting.status | replace(' ', '-') }}">{{ e.overfitting.status }}</span>
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- ============ Tabel perbandingan ============ -->
+<div class="panel mb-3">
+  <div class="panel-head">
+    <h2><i class="bi bi-table"></i> Tabel Perbandingan · Data Latih vs Data Uji</h2>
+    <span class="badge-soft">data uji 20% · stratify · random_state=42</span>
+  </div>
+  <div class="table-responsive">
+    <table class="table-dark-custom">
+      <thead>
+        <tr>
+          <th>Metrik</th>
+          {% for e in evaluasi %}<th class="th-group" colspan="2">{{ e.nama | pendek }}</th>{% endfor %}
+          <th>Baseline</th>
+        </tr>
+        <tr class="sub-head">
+          <th></th>
+          {% for e in evaluasi %}<th>latih</th><th>uji</th>{% endfor %}
+          <th>uji</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for label, key in [('Accuracy','accuracy'), ('Balanced accuracy','balanced_accuracy'),
+                              ('Precision (macro)','precision_macro'), ('Recall (macro)','recall_macro'),
+                              ('F1-score (macro)','f1_macro'), ('F1-score (weighted)','f1_weighted'),
+                              ('Recall Slight Injury','recall_Slight Injury'),
+                              ('Recall Serious Injury','recall_Serious Injury'),
+                              ('Recall Fatal injury','recall_Fatal injury')] %}
+        <tr>
+          <td>{{ label }}</td>
+          {% for e in evaluasi %}
+          {% set terbaik_uji = evaluasi | map(attribute='test') | map(attribute=key) | max %}
+          <td class="td-train">{{ e.train[key] | angka }}</td>
+          <td class="{{ 'best' if e.test[key] == terbaik_uji }}">{{ e.test[key] | angka }}</td>
+          {% endfor %}
+          <td class="td-train">{{ baseline[key] | angka }}</td>
+        </tr>
+        {% endfor %}
+        <tr class="row-sep">
+          <td>Selisih balanced acc. (latih − uji)</td>
+          {% for e in evaluasi %}<td colspan="2" class="of-{{ e.overfitting.status | replace(' ', '-') }}">{{ e.overfitting.gap_balanced_accuracy | angka(3) }} · {{ e.overfitting.status }}</td>{% endfor %}
+          <td>-</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="small muted mt-2 mb-0"><span class="best-legend"></span> nilai uji tertinggi per baris. Kolom abu-abu = data latih.
+    Nilai rendah tetap ditampilkan apa adanya.</p>
+</div>
+
+<!-- ============ Cross-validation & overfitting ============ -->
+<div class="row g-3 mb-3">
+  <div class="col-lg-6">
+    <div class="panel h-100">
+      <div class="panel-head">
+        <h2><i class="bi bi-arrow-repeat"></i> Stratified {{ tuning.cv_folds }}-Fold CV (data latih)</h2>
+        <span class="badge-soft">dasar pemilihan model</span>
+      </div>
+      <div class="table-responsive">
+      <table class="table-dark-custom compact">
+        <thead><tr><th>Model</th><th>Bal. acc.</th><th>Macro F1</th><th>Recall Fatal</th><th>Skor gab.</th></tr></thead>
+        <tbody>
+          {% for e in evaluasi %}
+          <tr class="{{ 'row-active' if e.slug == slug_terpilih }}">
+            <td>{{ e.nama | pendek }}</td>
+            <td>{{ e.cv.balanced_accuracy.mean | angka(3) }}<small class="sd">±{{ e.cv.balanced_accuracy.std | angka(3) }}</small></td>
+            <td>{{ e.cv.f1_macro.mean | angka(3) }}<small class="sd">±{{ e.cv.f1_macro.std | angka(3) }}</small></td>
+            <td>{{ e.cv.recall_fatal.mean | angka(3) }}<small class="sd">±{{ e.cv.recall_fatal.std | angka(3) }}</small></td>
+            <td><strong>{{ e.cv_gabungan | angka(3) }}</strong></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      </div>
+      <p class="small muted mt-2 mb-0">{{ kriteria }}. Standar deviasi recall Fatal besar karena tiap fold hanya berisi ±25 kasus fatal.</p>
+    </div>
+  </div>
+  <div class="col-lg-6">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-activity"></i> Indikasi Overfitting</h2></div>
+      {% for e in evaluasi %}
+      <div class="of-item">
+        <div class="of-head">
+          <strong>{{ e.nama | pendek }}</strong>
+          <span class="pill-of of-{{ e.overfitting.status | replace(' ', '-') }}">{{ e.overfitting.status }}</span>
+        </div>
+        <div class="small muted">
+          Balanced acc. latih {{ e.train.balanced_accuracy | angka(3) }} → uji {{ e.test.balanced_accuracy | angka(3) }};
+          macro F1 latih {{ e.train.f1_macro | angka(3) }} → uji {{ e.test.f1_macro | angka(3) }}.
+          {% if e.overfitting.status == 'kuat' %}
+          Pohon {{ e.kedalaman }} level dengan {{ e.jumlah_daun | ribuan }} daun "menghafal" data latih, sehingga skor anjlok di data uji.
+          {% elif e.overfitting.status == 'ringan' %}
+          Ada selisih, tetapi skor uji tetap dekat dengan skor CV, jadi model masih menggeneralisasi.
+          {% else %}
+          Skor latih dan uji hampir sama.
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+      <p class="small muted mb-0">Kategori: selisih balanced accuracy &gt; 0,15 = kuat; 0,05–0,15 = ringan; &lt; 0,05 = tidak terlihat.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Classification report + CM per model ============ -->
+<div class="row g-3 mb-3">
+  {% for e in evaluasi %}
+  <div class="col-xl-4 col-lg-6">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-list-check"></i> {{ e.nama | pendek }}</h2><span class="badge-soft">data uji</span></div>
+      <table class="table-dark-custom compact">
+        <thead><tr><th>Kelas</th><th>Prec.</th><th>Recall</th><th>F1</th><th>n</th></tr></thead>
+        <tbody>
+          {% for k in urutan_kelas %}{% set r = e.classification_report_test[k] %}
+          <tr>
+            <td><span class="dot-{{ info_kelas[k].warna }}"></span>{{ info_kelas[k].label }}</td>
+            <td>{{ r.precision | angka(3) }}</td><td>{{ r.recall | angka(3) }}</td>
+            <td>{{ r['f1-score'] | angka(3) }}</td><td>{{ r.support | int }}</td>
+          </tr>
+          {% endfor %}
+          {% set m = e.classification_report_test['macro avg'] %}
+          <tr class="row-sep"><td>Macro avg</td><td>{{ m.precision | angka(3) }}</td><td>{{ m.recall | angka(3) }}</td><td>{{ m['f1-score'] | angka(3) }}</td><td>{{ m.support | int }}</td></tr>
+        </tbody>
+      </table>
+      <div class="cm-title">Confusion matrix (baris = asli, kolom = prediksi)</div>
+      <table class="cm-table">
+        <thead><tr><th></th>{% for k in urutan_kelas %}<th>{{ info_kelas[k].label }}</th>{% endfor %}</tr></thead>
+        <tbody>
+          {% for baris in e.confusion_matrix_test %}{% set i = loop.index0 %}
+          <tr>
+            <th>{{ info_kelas[urutan_kelas[i]].label }}</th>
+            {% for v in baris %}<td class="{{ 'diag' if loop.index0 == i }}">{{ v }}</td>{% endfor %}
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- ============ Hasil tuning ============ -->
+<div class="panel mb-3">
+  <div class="panel-head">
+    <h2><i class="bi bi-sliders2"></i> Hyperparameter Tuning (GridSearchCV)</h2>
+    <span class="badge-soft">{{ tuning.jumlah_kombinasi }} kombinasi × {{ tuning.cv_folds }} fold</span>
+  </div>
+  <div class="row g-3">
+    <div class="col-md-7">
+      <div class="sub-panel h-100">
+        <div class="sub-title"><i class="bi bi-grid"></i> Ruang pencarian</div>
+        <ul class="grid-list">
+          {% for k, vals in tuning.param_grid.items() %}
+          <li><code>{{ k }}</code><span>{{ vals | join(', ') }}</span></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div class="sub-panel h-100">
+        <div class="sub-title"><i class="bi bi-trophy"></i> Parameter terbaik (Model C)</div>
+        <ul class="grid-list">
+          {% for k, v in tuning.parameter_terbaik.items() %}
+          <li><code>{{ k }}</code><strong>{{ v if v is not none else 'None' }}</strong></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table-dark-custom compact">
+          <thead><tr><th>#</th><th>criterion</th><th>depth</th><th>split</th><th>leaf</th><th>Bal. acc</th><th>Macro F1</th><th>Rec. Fatal</th><th>Skor</th></tr></thead>
+          <tbody>
+            {% for t in tuning.top %}
+            <tr class="{{ 'row-active' if loop.first }}">
+              <td>{{ t.peringkat }}</td><td>{{ t.criterion }}</td><td>{{ t.max_depth }}</td>
+              <td>{{ t.min_samples_split }}</td><td>{{ t.min_samples_leaf }}</td>
+              <td>{{ t.cv_balanced_accuracy | angka(3) }}</td><td>{{ t.cv_f1_macro | angka(3) }}</td>
+              <td>{{ t.cv_recall_fatal | angka(3) }}</td><td><strong>{{ t.skor_gabungan | angka(3) }}</strong></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <p class="small muted mt-2 mb-0">10 kombinasi teratas dari {{ tuning.jumlah_kombinasi }} (semua nilai = rata-rata CV pada data latih). Daftar lengkap: <code>reports/tuning_results.csv</code>.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============ Grafik ============ -->
+<div class="row g-3">
+  <div class="col-xl-6">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-graph-up"></i> Kurva Kedalaman Pohon (CV)</h2></div>
+      <figure class="figure-light mb-2"><img src="{{ url_for('static', filename='images/tuning_depth_curve.png') }}" alt="Kurva skor latih dan validasi per max_depth" class="img-fluid" loading="lazy"></figure>
+      <p class="small muted mb-0">Skor latih terus naik saat pohon makin dalam, tetapi skor validasi mendatar: tambahan kedalaman hanya menambah hafalan, bukan kemampuan generalisasi.</p>
+    </div>
+  </div>
+  <div class="col-xl-6">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-layout-split"></i> Latih vs Uji</h2></div>
+      <figure class="figure-light mb-0"><img src="{{ url_for('static', filename='images/train_vs_test.png') }}" alt="Perbandingan skor latih dan uji" class="img-fluid" loading="lazy"></figure>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-bar-chart"></i> Perbandingan Performa (data uji)</h2></div>
+      <figure class="figure-light mb-0"><img src="{{ url_for('static', filename='images/model_comparison.png') }}" alt="Grafik perbandingan performa" class="img-fluid" loading="lazy"></figure>
+    </div>
+  </div>
+  <div class="col-12">
+    <div class="panel">
+      <div class="panel-head"><h2><i class="bi bi-grid-3x3"></i> Heatmap Confusion Matrix (data uji)</h2></div>
+      <figure class="figure-light mb-0"><img src="{{ url_for('static', filename='images/confusion_matrix.png') }}" alt="Heatmap confusion matrix" class="img-fluid" loading="lazy"></figure>
+    </div>
+  </div>
+</div>
+{% endblock %}

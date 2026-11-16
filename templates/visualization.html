@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block title %}Visualisasi{% endblock %}
+{% block heading %}Visualisasi &amp; Interpretasi{% endblock %}
+{% block subheading %}Pohon keputusan, feature importance, dan aturan IF-THEN{% endblock %}
+
+{% block content %}
+<!-- Pilihan model -->
+<div class="model-switch mb-3" role="tablist">
+  {% for slug, nama in pilihan_model %}
+  <a href="{{ url_for('visualization', model=slug) }}" class="{{ 'active' if slug == slug_aktif }}" role="tab">
+    <span class="dot-model-{{ warna_model[slug] }}"></span>{{ nama }}
+    {% if slug == slug_terpilih %}<span class="badge-green ms-1">aktif</span>{% endif %}
+  </a>
+  {% endfor %}
+</div>
+
+<!-- Pohon keputusan -->
+<div class="panel mb-3">
+  <div class="panel-head">
+    <h2><i class="bi bi-diagram-3"></i> Pohon Keputusan {{ interp.nama }}</h2>
+    <a class="btn-ghost btn-sm" href="{{ url_for('static', filename='images/' ~ interp.gambar_pohon) }}" target="_blank" rel="noopener">
+      <i class="bi bi-arrows-fullscreen"></i> Buka ukuran penuh</a>
+  </div>
+  <div class="tree-meta">
+    <span>Kedalaman <strong>{{ interp.kedalaman }}</strong></span>
+    <span>Daun <strong>{{ interp.jumlah_daun }}</strong></span>
+    <span>Kolom one-hot <strong>{{ interp.jumlah_kolom_onehot }}</strong></span>
+  </div>
+  {% if interp.pohon_terpotong %}
+  <div class="note mb-2"><i class="bi bi-info-circle"></i>
+    <div>Pohon ini {{ interp.kedalaman }} level, sehingga gambar hanya menampilkan 4 level pertama agar terbaca.
+    Kotak abu-abu "(...)" berarti cabang berlanjut. Semua {{ interp.jumlah_daun }} aturan lengkap ada di bawah.</div></div>
+  {% endif %}
+  <div class="tree-scroll">
+    <img src="{{ url_for('static', filename='images/' ~ interp.gambar_pohon) }}" alt="Visualisasi pohon keputusan {{ interp.nama }}">
+  </div>
+  <p class="small muted mb-0 mt-2">
+    Cara membaca: kondisi <code>Light_conditions = Daylight &lt;= 0.5</code> bernilai <em>True</em>
+    (cabang kiri) jika pencahayaan <strong>bukan</strong> Daylight. Nilai <code>value</code> adalah bobot
+    kelas setelah <code>class_weight='balanced'</code>, urutan [Fatal, Serious, Slight].
+    Geser ke samping untuk melihat seluruh gambar.
+  </p>
+</div>
+
+<div class="row g-3 mb-3">
+  <!-- Feature importance -->
+  <div class="col-lg-5">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-bar-chart-steps"></i> Feature Importance</h2><span class="badge-soft">per fitur asli</span></div>
+      {% for fitur, nilai in importance %}
+      <div class="imp-row">
+        <div class="imp-label" title="{{ fitur }}">{{ label_fitur[fitur][0] }}</div>
+        <div class="imp-bar"><div style="width: {{ (nilai / maks * 100) | round(1) }}%"></div></div>
+        <div class="imp-num">{{ nilai | angka(3) }}</div>
+      </div>
+      {% endfor %}
+      <p class="small muted mb-0 mt-2">
+        Importance = kontribusi fitur dalam menurunkan impurity di seluruh pohon (jumlah dari semua
+        kategori one-hot fitur tersebut). Fitur bernilai 0 tidak dipakai sama sekali oleh pohon ini.
+      </p>
+    </div>
+  </div>
+  <div class="col-lg-7">
+    <div class="panel h-100">
+      <div class="panel-head"><h2><i class="bi bi-image"></i> Grafik Feature Importance</h2></div>
+      <figure class="figure-light mb-0"><img src="{{ url_for('static', filename='images/' ~ interp.gambar_importance) }}" alt="Grafik feature importance {{ interp.nama }}" class="img-fluid" loading="lazy"></figure>
+    </div>
+  </div>
+</div>
+
+<!-- Contoh aturan -->
+<div class="panel mb-3">
+  <div class="panel-head"><h2><i class="bi bi-signpost-split"></i> Contoh Aturan Keputusan (akar → daun)</h2><span class="badge-soft">1 per kelas prediksi</span></div>
+  <div class="row g-3">
+    {% for r in interp.contoh_aturan %}
+    <div class="col-lg-4">
+      <div class="rule-card border-{{ info_kelas[r.prediksi].warna }}">
+        <div class="rule-head">
+          <span>Aturan {{ loop.index }} <small class="muted">· n={{ r.jumlah_data | ribuan }}</small></span>
+          <span class="pill-{{ info_kelas[r.prediksi].warna }}">{{ r.prediksi }}</span>
+        </div>
+        <div class="rule-box">
+          <span class="kw">IF</span>
+          {% for k in r.kondisi %}
+          <div class="rule-line">{% if not loop.first %}<span class="kw">AND</span> {% endif %}{{ k }}</div>
+          {% endfor %}
+          <span class="kw">THEN</span> <strong>{{ r.prediksi }}</strong>
+        </div>
+        <p class="small mt-2 mb-0">{{ r.penjelasan }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Semua aturan (tanpa ketergantungan JavaScript: elemen <details>) -->
+<div class="panel">
+  <div class="panel-head">
+    <h2><i class="bi bi-list-ol"></i> Semua Aturan ({{ interp.semua_aturan | length }} daun)</h2>
+    <div class="d-flex gap-2 align-items-center flex-wrap">
+      <input type="search" id="ruleFilter" class="form-control form-control-sm rule-filter" placeholder="Cari fitur / kategori…" aria-label="Cari aturan">
+      <select id="ruleClass" class="form-select form-select-sm rule-filter" aria-label="Filter kelas">
+        <option value="">Semua kelas</option>
+        {% for k in info_kelas %}<option value="{{ k }}">{{ k }}</option>{% endfor %}
+      </select>
+    </div>
+  </div>
+  <div class="rule-list" id="ruleList">
+    {% for r in interp.semua_aturan %}
+    {% set p = r.persen_per_kelas %}
+    <details class="rule-item" data-class="{{ r.prediksi }}" data-text="{{ r.kondisi | join(' ') | lower }}">
+      <summary>
+        <span class="pill-{{ info_kelas[r.prediksi].warna }}">{{ r.prediksi }}</span>
+        <span>Daun {{ r.leaf }} · {{ r.jumlah_data | ribuan }} data</span>
+        <span class="muted small ms-auto">Fatal {{ '%.1f' | format(p['Fatal injury']) }}% · Serious {{ '%.1f' | format(p['Serious Injury']) }}%</span>
+      </summary>
+      <div class="rule-body">
+        <div class="rule-box">
+          <span class="kw">IF</span>
+          {% for k in r.kondisi %}
+          <div class="rule-line">{% if not loop.first %}<span class="kw">AND</span> {% endif %}{{ k }}</div>
+          {% endfor %}
+          <span class="kw">THEN</span> <strong>{{ r.prediksi }}</strong>
+        </div>
+        <p class="small muted mb-0 mt-2">
+          Distribusi data latih: Slight {{ r.jumlah_per_kelas['Slight Injury'] }} ({{ '%.1f' | format(p['Slight Injury']) }}%),
+          Serious {{ r.jumlah_per_kelas['Serious Injury'] }} ({{ '%.1f' | format(p['Serious Injury']) }}%),
+          Fatal {{ r.jumlah_per_kelas['Fatal injury'] }} ({{ '%.1f' | format(p['Fatal injury']) }}%).
+        </p>
+      </div>
+    </details>
+    {% endfor %}
+    <p class="muted small" id="ruleEmpty" hidden>Tidak ada aturan yang cocok dengan filter.</p>
+  </div>
+</div>
+{% endblock %}

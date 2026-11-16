@@ -1,0 +1,766 @@
+ATURAN IF-THEN Model C (Tuned, GridSearchCV)
+Statistik = jumlah data latih asli yang jatuh ke daun tersebut.
+
+======================================================================
+CONTOH ATURAN (1 per kelas prediksi)
+======================================================================
+
+Aturan 1 (prediksi: Slight Injury, n=3637)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type = Asphalt roads
+   AND Light_conditions bukan Darkness - no lighting
+   AND Driving_experience bukan Below 1yr
+THEN Slight Injury
+Penjelasan: Dari 3637 kecelakaan di data latih yang memenuhi kondisi ini, 87.2% luka ringan, 11.9% luka serius, dan 0.9% fatal. Kelompok ini didominasi luka ringan, sehingga model memprediksi Slight Injury.
+
+Aturan 2 (prediksi: Serious Injury, n=427)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51, Unknown)
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Type_of_vehicle bukan Other
+   AND Weather_conditions = Normal
+THEN Serious Injury
+Penjelasan: Dari 427 kecelakaan di data latih yang memenuhi kondisi ini, 74.5% luka ringan, 25.5% luka serius, dan 0.0% fatal. Persentase Serious Injury di kelompok ini 1.8 kali lipat dari rata-rata seluruh data (14.15%). Karena class_weight='balanced' memberi bobot lebih besar pada kelas langka, model memprediksi Serious Injury walaupun mayoritas kecelakaan di kelompok ini tetap luka ringan. Artinya, prediksi ini lebih tepat dibaca sebagai 'risiko Serious Injury lebih tinggi'.
+
+Aturan 3 (prediksi: Fatal injury, n=434)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, 31-50)
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience bukan Below 1yr
+   AND Type_of_vehicle bukan Automobile
+THEN Fatal injury
+Penjelasan: Dari 434 kecelakaan di data latih yang memenuhi kondisi ini, 84.8% luka ringan, 13.4% luka serius, dan 1.8% fatal. Persentase Fatal injury di kelompok ini 1.4 kali lipat dari rata-rata seluruh data (1.29%). Karena class_weight='balanced' memberi bobot lebih besar pada kelas langka, model memprediksi Fatal injury walaupun mayoritas kecelakaan di kelompok ini tetap luka ringan. Artinya, prediksi ini lebih tepat dibaca sebagai 'risiko Fatal injury lebih tinggi'.
+
+======================================================================
+SEMUA ATURAN (67 daun)
+======================================================================
+
+Daun 56 (prediksi: Slight Injury, n=3637)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type = Asphalt roads
+   AND Light_conditions bukan Darkness - no lighting
+   AND Driving_experience bukan Below 1yr
+THEN Slight Injury
+Distribusi: Slight Injury 3171 (87.2%), Serious Injury 432 (11.9%), Fatal injury 34 (0.9%)
+
+Daun 93 (prediksi: Fatal injury, n=434)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, 31-50)
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience bukan Below 1yr
+   AND Type_of_vehicle bukan Automobile
+THEN Fatal injury
+Distribusi: Slight Injury 368 (84.8%), Serious Injury 58 (13.4%), Fatal injury 8 (1.8%)
+
+Daun 16 (prediksi: Serious Injury, n=427)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51, Unknown)
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Type_of_vehicle bukan Other
+   AND Weather_conditions = Normal
+THEN Serious Injury
+Distribusi: Slight Injury 318 (74.5%), Serious Injury 109 (25.5%), Fatal injury 0 (0.0%)
+
+Daun 57 (prediksi: Serious Injury, n=424)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type = Asphalt roads
+   AND Light_conditions bukan Darkness - no lighting
+   AND Driving_experience = Below 1yr
+THEN Serious Injury
+Distribusi: Slight Injury 361 (85.1%), Serious Injury 62 (14.6%), Fatal injury 1 (0.2%)
+
+Daun 96 (prediksi: Fatal injury, n=423)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = 31-50
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience bukan Below 1yr
+   AND Type_of_collision bukan Collision with pedestrians
+THEN Fatal injury
+Distribusi: Slight Injury 371 (87.7%), Serious Injury 41 (9.7%), Fatal injury 11 (2.6%)
+
+Daun 118 (prediksi: Slight Injury, n=324)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver bukan Female
+   AND Road_surface_type = Asphalt roads
+THEN Slight Injury
+Distribusi: Slight Injury 306 (94.4%), Serious Injury 18 (5.6%), Fatal injury 0 (0.0%)
+
+Daun 94 (prediksi: Slight Injury, n=216)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, 31-50)
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience bukan Below 1yr
+   AND Type_of_vehicle = Automobile
+THEN Slight Injury
+Distribusi: Slight Injury 194 (89.8%), Serious Injury 22 (10.2%), Fatal injury 0 (0.0%)
+
+Daun 51 (prediksi: Serious Injury, n=194)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan (No junction, Crossing)
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type bukan Asphalt roads
+   AND Weather_conditions bukan Raining
+THEN Serious Injury
+Distribusi: Slight Injury 153 (78.9%), Serious Injury 41 (21.1%), Fatal injury 0 (0.0%)
+
+Daun 71 (prediksi: Serious Injury, n=187)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Under 18
+   AND Types_of_Junction bukan (No junction, Other)
+   AND Weather_conditions = Normal
+   AND Driving_experience bukan 2-5yr
+THEN Serious Injury
+Distribusi: Slight Injury 153 (81.8%), Serious Injury 34 (18.2%), Fatal injury 0 (0.0%)
+
+Daun 63 (prediksi: Fatal injury, n=175)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision = Collision with pedestrians
+   AND Road_surface_conditions = Dry
+   AND Driving_experience bukan Above 10yr
+THEN Fatal injury
+Distribusi: Slight Injury 148 (84.6%), Serious Injury 22 (12.6%), Fatal injury 5 (2.9%)
+
+Daun 106 (prediksi: Fatal injury, n=168)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions = Darkness - lights lit
+   AND Driving_experience bukan 1-2yr
+   AND Type_of_vehicle bukan Lorry (41-100Q)
+THEN Fatal injury
+Distribusi: Slight Injury 127 (75.6%), Serious Injury 27 (16.1%), Fatal injury 14 (8.3%)
+
+Daun 80 (prediksi: Serious Injury, n=144)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions bukan (Raining, Other)
+   AND Type_of_vehicle bukan Other
+   AND Light_conditions bukan Darkness - lights lit
+THEN Serious Injury
+Distribusi: Slight Injury 113 (78.5%), Serious Injury 31 (21.5%), Fatal injury 0 (0.0%)
+
+Daun 9 (prediksi: Serious Injury, n=112)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51, 18-30)
+   AND Type_of_collision bukan Vehicle with vehicle collision
+   AND Road_surface_type = Asphalt roads
+   AND Driving_experience bukan Above 10yr
+THEN Serious Injury
+Distribusi: Slight Injury 83 (74.1%), Serious Injury 29 (25.9%), Fatal injury 0 (0.0%)
+
+Daun 81 (prediksi: Slight Injury, n=102)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions bukan (Raining, Other)
+   AND Type_of_vehicle bukan Other
+   AND Light_conditions = Darkness - lights lit
+THEN Slight Injury
+Distribusi: Slight Injury 90 (88.2%), Serious Injury 12 (11.8%), Fatal injury 0 (0.0%)
+
+Daun 126 (prediksi: Slight Injury, n=99)
+IF
+       Number_of_vehicles_involved >= 3
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver = Female
+THEN Slight Injury
+Distribusi: Slight Injury 95 (96.0%), Serious Injury 4 (4.0%), Fatal injury 0 (0.0%)
+
+Daun 130 (prediksi: Serious Injury, n=99)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision = Collision with roadside objects
+   AND Type_of_vehicle bukan Lorry (41-100Q)
+   AND Types_of_Junction bukan Crossing
+THEN Serious Injury
+Distribusi: Slight Injury 84 (84.8%), Serious Injury 15 (15.2%), Fatal injury 0 (0.0%)
+
+Daun 17 (prediksi: Serious Injury, n=97)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Type_of_vehicle bukan Other
+   AND Weather_conditions = Normal
+THEN Serious Injury
+Distribusi: Slight Injury 80 (82.5%), Serious Injury 17 (17.5%), Fatal injury 0 (0.0%)
+
+Daun 87 (prediksi: Slight Injury, n=95)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, 18-30)
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions = Raining
+   AND Light_conditions = Daylight
+THEN Slight Injury
+Distribusi: Slight Injury 82 (86.3%), Serious Injury 12 (12.6%), Fatal injury 1 (1.1%)
+
+Daun 119 (prediksi: Slight Injury, n=94)
+IF
+       Number_of_vehicles_involved >= 3
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver bukan Female
+THEN Slight Injury
+Distribusi: Slight Injury 84 (89.4%), Serious Injury 10 (10.6%), Fatal injury 0 (0.0%)
+
+Daun 14 (prediksi: Serious Injury, n=93)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51)
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Type_of_vehicle bukan Other
+   AND Weather_conditions bukan Normal
+THEN Serious Injury
+Distribusi: Slight Injury 79 (84.9%), Serious Injury 14 (15.1%), Fatal injury 0 (0.0%)
+
+Daun 42 (prediksi: Serious Injury, n=92)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions = Dry
+   AND Type_of_vehicle = Automobile
+THEN Serious Injury
+Distribusi: Slight Injury 66 (71.7%), Serious Injury 24 (26.1%), Fatal injury 2 (2.2%)
+
+Daun 11 (prediksi: Serious Injury, n=88)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = 18-30
+   AND Type_of_collision bukan Vehicle with vehicle collision
+   AND Road_surface_type = Asphalt roads
+THEN Serious Injury
+Distribusi: Slight Injury 63 (71.6%), Serious Injury 23 (26.1%), Fatal injury 2 (2.3%)
+
+Daun 38 (prediksi: Fatal injury, n=88)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions = Dry
+   AND Type_of_vehicle bukan Automobile
+   AND Driving_experience bukan (1-2yr, 2-5yr)
+   AND Age_band_of_driver bukan Unknown
+THEN Fatal injury
+Distribusi: Slight Injury 57 (64.8%), Serious Injury 24 (27.3%), Fatal injury 7 (8.0%)
+
+Daun 23 (prediksi: Fatal injury, n=87)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = Over 51
+   AND Driving_experience bukan Above 10yr
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Road_surface_conditions bukan Wet or damp
+THEN Fatal injury
+Distribusi: Slight Injury 69 (79.3%), Serious Injury 16 (18.4%), Fatal injury 2 (2.3%)
+
+Daun 18 (prediksi: Serious Injury, n=83)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51)
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Type_of_vehicle = Other
+THEN Serious Injury
+Distribusi: Slight Injury 65 (78.3%), Serious Injury 17 (20.5%), Fatal injury 1 (1.2%)
+
+Daun 67 (prediksi: Slight Injury, n=82)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = Under 18
+   AND Types_of_Junction bukan No junction
+   AND Weather_conditions bukan Normal
+THEN Slight Injury
+Distribusi: Slight Injury 75 (91.5%), Serious Injury 7 (8.5%), Fatal injury 0 (0.0%)
+
+Daun 124 (prediksi: Slight Injury, n=80)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver = Female
+   AND Light_conditions = Daylight
+   AND Driving_experience bukan 5-10yr
+THEN Slight Injury
+Distribusi: Slight Injury 71 (88.8%), Serious Injury 9 (11.2%), Fatal injury 0 (0.0%)
+
+Daun 100 (prediksi: Serious Injury, n=79)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience = Below 1yr
+   AND Type_of_vehicle bukan Lorry (41-100Q)
+THEN Serious Injury
+Distribusi: Slight Injury 65 (82.3%), Serious Injury 14 (17.7%), Fatal injury 0 (0.0%)
+
+Daun 52 (prediksi: Slight Injury, n=76)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction = Crossing
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type bukan Asphalt roads
+   AND Weather_conditions bukan Raining
+THEN Slight Injury
+Distribusi: Slight Injury 69 (90.8%), Serious Injury 7 (9.2%), Fatal injury 0 (0.0%)
+
+Daun 122 (prediksi: Serious Injury, n=76)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver = Female
+   AND Light_conditions bukan Daylight
+THEN Serious Injury
+Distribusi: Slight Injury 62 (81.6%), Serious Injury 14 (18.4%), Fatal injury 0 (0.0%)
+
+Daun 85 (prediksi: Slight Injury, n=67)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions = Raining
+   AND Light_conditions bukan Daylight
+THEN Slight Injury
+Distribusi: Slight Injury 58 (86.6%), Serious Injury 9 (13.4%), Fatal injury 0 (0.0%)
+
+Daun 65 (prediksi: Serious Injury, n=65)
+IF
+       Number_of_vehicles_involved >= 3
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision = Collision with pedestrians
+THEN Serious Injury
+Distribusi: Slight Injury 55 (84.6%), Serious Injury 10 (15.4%), Fatal injury 0 (0.0%)
+
+Daun 61 (prediksi: Fatal injury, n=64)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision = Collision with pedestrians
+   AND Road_surface_conditions bukan Dry
+THEN Fatal injury
+Distribusi: Slight Injury 57 (89.1%), Serious Injury 2 (3.1%), Fatal injury 5 (7.8%)
+
+Daun 88 (prediksi: Fatal injury, n=64)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = 18-30
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions = Raining
+   AND Light_conditions = Daylight
+THEN Fatal injury
+Distribusi: Slight Injury 54 (84.4%), Serious Injury 7 (10.9%), Fatal injury 3 (4.7%)
+
+Daun 32 (prediksi: Serious Injury, n=63)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions bukan Dry
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Weather_conditions bukan Raining
+THEN Serious Injury
+Distribusi: Slight Injury 43 (68.3%), Serious Injury 19 (30.2%), Fatal injury 1 (1.6%)
+
+Daun 58 (prediksi: Fatal injury, n=62)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type = Asphalt roads
+   AND Light_conditions = Darkness - no lighting
+THEN Fatal injury
+Distribusi: Slight Injury 49 (79.0%), Serious Injury 9 (14.5%), Fatal injury 4 (6.5%)
+
+Daun 26 (prediksi: Fatal injury, n=60)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = Under 18
+THEN Fatal injury
+Distribusi: Slight Injury 24 (40.0%), Serious Injury 32 (53.3%), Fatal injury 4 (6.7%)
+
+Daun 73 (prediksi: Slight Injury, n=60)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Under 18
+   AND Types_of_Junction bukan No junction
+   AND Weather_conditions = Normal
+   AND Driving_experience = 2-5yr
+THEN Slight Injury
+Distribusi: Slight Injury 55 (91.7%), Serious Injury 5 (8.3%), Fatal injury 0 (0.0%)
+
+Daun 74 (prediksi: Serious Injury, n=58)
+IF
+       Number_of_vehicles_involved >= 3
+   AND Age_band_of_driver = Under 18
+   AND Types_of_Junction bukan No junction
+   AND Weather_conditions = Normal
+THEN Serious Injury
+Distribusi: Slight Injury 43 (74.1%), Serious Injury 15 (25.9%), Fatal injury 0 (0.0%)
+
+Daun 109 (prediksi: Slight Injury, n=54)
+IF
+       Number_of_vehicles_involved >= 3
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions = Darkness - lights lit
+THEN Slight Injury
+Distribusi: Slight Injury 48 (88.9%), Serious Injury 6 (11.1%), Fatal injury 0 (0.0%)
+
+Daun 33 (prediksi: Fatal injury, n=52)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions bukan Dry
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Weather_conditions = Raining
+THEN Fatal injury
+Distribusi: Slight Injury 33 (63.5%), Serious Injury 15 (28.8%), Fatal injury 4 (7.7%)
+
+Daun 117 (prediksi: Slight Injury, n=52)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan (Collision with roadside objects, Vehicle with vehicle collision)
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver bukan Female
+   AND Road_surface_type = Asphalt roads
+THEN Slight Injury
+Distribusi: Slight Injury 51 (98.1%), Serious Injury 1 (1.9%), Fatal injury 0 (0.0%)
+
+Daun 43 (prediksi: Serious Injury, n=46)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction = Crossing
+THEN Serious Injury
+Distribusi: Slight Injury 36 (78.3%), Serious Injury 10 (21.7%), Fatal injury 0 (0.0%)
+
+Daun 125 (prediksi: Slight Injury, n=45)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver = Female
+   AND Light_conditions = Daylight
+   AND Driving_experience = 5-10yr
+THEN Slight Injury
+Distribusi: Slight Injury 43 (95.6%), Serious Injury 2 (4.4%), Fatal injury 0 (0.0%)
+
+Daun 127 (prediksi: Slight Injury, n=45)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle = Stationwagen
+THEN Slight Injury
+Distribusi: Slight Injury 45 (100.0%), Serious Injury 0 (0.0%), Fatal injury 0 (0.0%)
+
+Daun 30 (prediksi: Serious Injury, n=39)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions bukan Dry
+   AND Type_of_collision bukan Vehicle with vehicle collision
+THEN Serious Injury
+Distribusi: Slight Injury 24 (61.5%), Serious Injury 15 (38.5%), Fatal injury 0 (0.0%)
+
+Daun 83 (prediksi: Slight Injury, n=39)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions = Other
+THEN Slight Injury
+Distribusi: Slight Injury 39 (100.0%), Serious Injury 0 (0.0%), Fatal injury 0 (0.0%)
+
+Daun 82 (prediksi: Slight Injury, n=38)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions bukan Dry
+   AND Weather_conditions bukan (Raining, Other)
+   AND Type_of_vehicle = Other
+THEN Slight Injury
+Distribusi: Slight Injury 37 (97.4%), Serious Injury 1 (2.6%), Fatal injury 0 (0.0%)
+
+Daun 108 (prediksi: Slight Injury, n=38)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions = Darkness - lights lit
+   AND Driving_experience = 1-2yr
+THEN Slight Injury
+Distribusi: Slight Injury 34 (89.5%), Serious Injury 4 (10.5%), Fatal injury 0 (0.0%)
+
+Daun 21 (prediksi: Serious Injury, n=35)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = Over 51
+   AND Driving_experience bukan Above 10yr
+   AND Type_of_collision bukan Vehicle with vehicle collision
+THEN Serious Injury
+Distribusi: Slight Injury 22 (62.9%), Serious Injury 13 (37.1%), Fatal injury 0 (0.0%)
+
+Daun 40 (prediksi: Fatal injury, n=34)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions = Dry
+   AND Type_of_vehicle bukan Automobile
+   AND Driving_experience = 2-5yr
+THEN Fatal injury
+Distribusi: Slight Injury 17 (50.0%), Serious Injury 11 (32.4%), Fatal injury 6 (17.6%)
+
+Daun 64 (prediksi: Slight Injury, n=32)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision = Collision with pedestrians
+   AND Road_surface_conditions = Dry
+   AND Driving_experience = Above 10yr
+THEN Slight Injury
+Distribusi: Slight Injury 30 (93.8%), Serious Injury 2 (6.2%), Fatal injury 0 (0.0%)
+
+Daun 53 (prediksi: Slight Injury, n=29)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan (Unknown, Under 18)
+   AND Types_of_Junction bukan No junction
+   AND Type_of_collision bukan Collision with pedestrians
+   AND Road_surface_type bukan Asphalt roads
+   AND Weather_conditions = Raining
+THEN Slight Injury
+Distribusi: Slight Injury 29 (100.0%), Serious Injury 0 (0.0%), Fatal injury 0 (0.0%)
+
+Daun 72 (prediksi: Slight Injury, n=28)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Under 18
+   AND Types_of_Junction = Other
+   AND Weather_conditions = Normal
+   AND Driving_experience bukan 2-5yr
+THEN Slight Injury
+Distribusi: Slight Injury 25 (89.3%), Serious Injury 3 (10.7%), Fatal injury 0 (0.0%)
+
+Daun 107 (prediksi: Slight Injury, n=28)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions = Darkness - lights lit
+   AND Driving_experience bukan 1-2yr
+   AND Type_of_vehicle = Lorry (41-100Q)
+THEN Slight Injury
+Distribusi: Slight Injury 26 (92.9%), Serious Injury 2 (7.1%), Fatal injury 0 (0.0%)
+
+Daun 101 (prediksi: Slight Injury, n=27)
+IF
+       Number_of_vehicles_involved >= 3
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience = Below 1yr
+   AND Type_of_vehicle bukan Lorry (41-100Q)
+THEN Slight Injury
+Distribusi: Slight Injury 25 (92.6%), Serious Injury 2 (7.4%), Fatal injury 0 (0.0%)
+
+Daun 25 (prediksi: Fatal injury, n=26)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = Over 51
+   AND Driving_experience = Above 10yr
+THEN Fatal injury
+Distribusi: Slight Injury 19 (73.1%), Serious Injury 4 (15.4%), Fatal injury 3 (11.5%)
+
+Daun 97 (prediksi: Fatal injury, n=26)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = 31-50
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience bukan Below 1yr
+   AND Type_of_collision = Collision with pedestrians
+THEN Fatal injury
+Distribusi: Slight Injury 23 (88.5%), Serious Injury 0 (0.0%), Fatal injury 3 (11.5%)
+
+Daun 115 (prediksi: Slight Injury, n=25)
+IF
+       2 <= Number_of_vehicles_involved <= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision bukan Collision with roadside objects
+   AND Type_of_vehicle bukan Stationwagen
+   AND Sex_of_driver bukan Female
+   AND Road_surface_type bukan Asphalt roads
+THEN Slight Injury
+Distribusi: Slight Injury 25 (100.0%), Serious Injury 0 (0.0%), Fatal injury 0 (0.0%)
+
+Daun 24 (prediksi: Serious Injury, n=24)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver = Over 51
+   AND Driving_experience bukan Above 10yr
+   AND Type_of_collision = Vehicle with vehicle collision
+   AND Road_surface_conditions = Wet or damp
+THEN Serious Injury
+Distribusi: Slight Injury 14 (58.3%), Serious Injury 10 (41.7%), Fatal injury 0 (0.0%)
+
+Daun 39 (prediksi: Serious Injury, n=24)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions = Dry
+   AND Type_of_vehicle bukan Automobile
+   AND Driving_experience bukan (1-2yr, 2-5yr)
+   AND Age_band_of_driver = Unknown
+THEN Serious Injury
+Distribusi: Slight Injury 18 (75.0%), Serious Injury 6 (25.0%), Fatal injury 0 (0.0%)
+
+Daun 10 (prediksi: Slight Injury, n=23)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51, 18-30)
+   AND Type_of_collision bukan Vehicle with vehicle collision
+   AND Road_surface_type = Asphalt roads
+   AND Driving_experience = Above 10yr
+THEN Slight Injury
+Distribusi: Slight Injury 20 (87.0%), Serious Injury 3 (13.0%), Fatal injury 0 (0.0%)
+
+Daun 41 (prediksi: Fatal injury, n=22)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions = Darkness - lights lit
+   AND Types_of_Junction bukan Crossing
+   AND Road_surface_conditions = Dry
+   AND Type_of_vehicle bukan Automobile
+   AND Driving_experience = 1-2yr
+THEN Fatal injury
+Distribusi: Slight Injury 16 (72.7%), Serious Injury 2 (9.1%), Fatal injury 4 (18.2%)
+
+Daun 6 (prediksi: Fatal injury, n=21)
+IF
+       Number_of_vehicles_involved <= 1
+   AND Light_conditions bukan Darkness - lights lit
+   AND Age_band_of_driver bukan (Under 18, Over 51)
+   AND Type_of_collision bukan Vehicle with vehicle collision
+   AND Road_surface_type bukan Asphalt roads
+THEN Fatal injury
+Distribusi: Slight Injury 17 (81.0%), Serious Injury 3 (14.3%), Fatal injury 1 (4.8%)
+
+Daun 102 (prediksi: Slight Injury, n=21)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver bukan Unknown
+   AND Types_of_Junction = No junction
+   AND Road_surface_conditions = Dry
+   AND Light_conditions bukan Darkness - lights lit
+   AND Driving_experience = Below 1yr
+   AND Type_of_vehicle = Lorry (41-100Q)
+THEN Slight Injury
+Distribusi: Slight Injury 20 (95.2%), Serious Injury 1 (4.8%), Fatal injury 0 (0.0%)
+
+Daun 131 (prediksi: Serious Injury, n=21)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision = Collision with roadside objects
+   AND Type_of_vehicle bukan Lorry (41-100Q)
+   AND Types_of_Junction = Crossing
+THEN Serious Injury
+Distribusi: Slight Injury 16 (76.2%), Serious Injury 5 (23.8%), Fatal injury 0 (0.0%)
+
+Daun 132 (prediksi: Fatal injury, n=20)
+IF
+       Number_of_vehicles_involved >= 2
+   AND Age_band_of_driver = Unknown
+   AND Type_of_collision = Collision with roadside objects
+   AND Type_of_vehicle = Lorry (41-100Q)
+THEN Fatal injury
+Distribusi: Slight Injury 19 (95.0%), Serious Injury 0 (0.0%), Fatal injury 1 (5.0%)
+

@@ -1,0 +1,100 @@
+CLASSIFICATION REPORT - MODEL A, B, dan C
+Data uji = 20% (stratify, random_state=42)
+Model terpilih (CV skor gabungan balanced_accuracy + f1_macro + recall_fatal): Model C (Tuned, GridSearchCV)
+
+======================================================================
+Model A (Unpruned)
+======================================================================
+Parameter: {'criterion': 'gini', 'max_depth': None, 'min_samples_split': 2, 'min_samples_leaf': 1, 'class_weight': 'balanced'}
+Kedalaman: 40 | Jumlah daun: 2702
+CV balanced_accuracy: 0.3729 +/- 0.0305
+CV f1_macro: 0.3563 +/- 0.0198
+CV recall_fatal: 0.0865 +/- 0.0663
+CV skor gabungan: 0.2719
+
+--- DATA LATIH ---
+                precision    recall  f1-score   support
+
+ Slight Injury     0.9921    0.8741    0.9294      8331
+Serious Injury     0.6121    0.9326    0.7391      1394
+  Fatal injury     0.3273    1.0000    0.4932       127
+
+      accuracy                         0.8840      9852
+     macro avg     0.6438    0.9356    0.7205      9852
+  weighted avg     0.9298    0.8840    0.8968      9852
+
+--- DATA UJI ---
+                precision    recall  f1-score   support
+
+ Slight Injury     0.8621    0.7706    0.8138      2084
+Serious Injury     0.2008    0.2923    0.2380       349
+  Fatal injury     0.0108    0.0323    0.0161        31
+
+      accuracy                         0.6936      2464
+     macro avg     0.3579    0.3651    0.3560      2464
+  weighted avg     0.7577    0.6936    0.7222      2464
+
+======================================================================
+Model B (Pruned, max_depth=4)
+======================================================================
+Parameter: {'criterion': 'gini', 'max_depth': 4, 'min_samples_split': 2, 'min_samples_leaf': 1, 'class_weight': 'balanced'}
+Kedalaman: 4 | Jumlah daun: 16
+CV balanced_accuracy: 0.4202 +/- 0.0332
+CV f1_macro: 0.3074 +/- 0.0658
+CV recall_fatal: 0.4018 +/- 0.0994
+CV skor gabungan: 0.3765
+
+--- DATA LATIH ---
+                precision    recall  f1-score   support
+
+ Slight Injury     0.8741    0.6491    0.7450      8331
+Serious Injury     0.2330    0.1923    0.2107      1394
+  Fatal injury     0.0314    0.6220    0.0598       127
+
+      accuracy                         0.5841      9852
+     macro avg     0.3795    0.4878    0.3385      9852
+  weighted avg     0.7725    0.5841    0.6606      9852
+
+--- DATA UJI ---
+                precision    recall  f1-score   support
+
+ Slight Injury     0.8729    0.6689    0.7574      2084
+Serious Injury     0.2704    0.1805    0.2165       349
+  Fatal injury     0.0205    0.4194    0.0391        31
+
+      accuracy                         0.5966      2464
+     macro avg     0.3879    0.4229    0.3377      2464
+  weighted avg     0.7768    0.5966    0.6718      2464
+
+======================================================================
+Model C (Tuned, GridSearchCV)
+======================================================================
+Parameter: {'criterion': 'entropy', 'max_depth': 8, 'min_samples_split': 100, 'min_samples_leaf': 20, 'class_weight': 'balanced'}
+Kedalaman: 8 | Jumlah daun: 67
+CV balanced_accuracy: 0.4403 +/- 0.0082
+CV f1_macro: 0.3157 +/- 0.0301
+CV recall_fatal: 0.4938 +/- 0.1325
+CV skor gabungan: 0.4166
+
+--- DATA LATIH ---
+                precision    recall  f1-score   support
+
+ Slight Injury     0.8884    0.5818    0.7031      8331
+Serious Injury     0.2128    0.3924    0.2760      1394
+  Fatal injury     0.0465    0.6693    0.0870       127
+
+      accuracy                         0.5561      9852
+     macro avg     0.3826    0.5478    0.3554      9852
+  weighted avg     0.7819    0.5561    0.6347      9852
+
+--- DATA UJI ---
+                precision    recall  f1-score   support
+
+ Slight Injury     0.8814    0.5988    0.7131      2084
+Serious Injury     0.2029    0.3553    0.2583       349
+  Fatal injury     0.0252    0.3548    0.0470        31
+
+      accuracy                         0.5613      2464
+     macro avg     0.3698    0.4363    0.3395      2464
+  weighted avg     0.7745    0.5613    0.6403      2464
+

@@ -1,0 +1,17 @@
+# File yang TIDAK ikut di-upload ke Vercel (aplikasi tidak membutuhkannya)
+venv/
+.venv/
+__pycache__/
+*.pyc
+reports/
+RTA Dataset.csv
+train_model.py
+eda.py
+check_dataset.py
+buat_requirements.py
+requirements-dev.txt
+requirements-lock.txt
+render.yaml
+Procfile
+*.docx
+*.zip

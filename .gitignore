@@ -1,0 +1,18 @@
+# Lingkungan Python (besar & khusus laptop masing-masing)
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# File kerja yang bukan bagian aplikasi
+*.zip
+*.docx
+~$*
+requirements-lock.txt
+static/

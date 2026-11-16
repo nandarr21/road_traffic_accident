@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% block title %}Prediksi{% endblock %}
+{% block heading %}Prediksi Tingkat Keparahan{% endblock %}
+{% block subheading %}Isi 11 variabel kecelakaan, lalu klik Klasifikasi{% endblock %}
+
+{% block content %}
+<div class="row g-3">
+  <!-- ================= FORM ================= -->
+  <div class="col-xl-7">
+    <form method="post" action="{{ url_for('predict') }}" class="panel" id="predictForm" novalidate>
+      {% if errors %}
+      <div class="alert-dark-danger mb-3">
+        <i class="bi bi-exclamation-circle"></i>
+        <div>
+          <strong>Periksa kembali isian Anda.</strong>
+          {% if errors._umum %}<br>{{ errors._umum }}{% else %}<br>Ada {{ errors | length }} isian yang belum valid.{% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% for judul, ikon, daftar in kelompok %}
+      <div class="form-group-block">
+        <h3 class="group-title"><i class="bi {{ ikon }}"></i> {{ judul }}</h3>
+        <div class="row g-3">
+          {% for fitur in daftar %}
+          {% set label, bantuan = label_fitur[fitur] %}
+          <div class="col-md-6">
+            <label for="{{ fitur }}" class="form-label">{{ label }}</label>
+
+            {% if fitur in fitur_numerik %}
+            <input type="number" class="form-control {{ 'is-invalid' if errors[fitur] }}"
+                   id="{{ fitur }}" name="{{ fitur }}" step="1"
+                   min="{{ rentang[fitur].min }}" max="{{ rentang[fitur].max }}"
+                   value="{{ nilai.get(fitur, '') }}" placeholder="{{ rentang[fitur].min }}–{{ rentang[fitur].max }}" required>
+            {% else %}
+            <select class="form-select {{ 'is-invalid' if errors[fitur] }}" id="{{ fitur }}" name="{{ fitur }}" required>
+              <option value="" {{ 'selected' if not nilai.get(fitur) }} disabled>— Pilih —</option>
+              {% for opsi in pilihan[fitur] %}
+              <option value="{{ opsi }}" {{ 'selected' if nilai.get(fitur) == opsi }}>{{ opsi }}</option>
+              {% endfor %}
+            </select>
+            {% endif %}
+
+            {% if errors[fitur] %}
+            <div class="invalid-feedback d-block">{{ errors[fitur] }}</div>
+            {% else %}
+            <div class="form-text">{{ bantuan }} <code>{{ fitur }}</code></div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+
+      <div class="d-flex gap-2 flex-wrap">
+        <button type="submit" class="btn-accent" id="btnPredict">
+          <i class="bi bi-cpu"></i> <span>Klasifikasi</span></button>
+        <button type="button" class="btn-ghost" id="btnContoh"><i class="bi bi-magic"></i> Isi contoh</button>
+        <a href="{{ url_for('predict') }}" class="btn-ghost"><i class="bi bi-arrow-counterclockwise"></i> Reset</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- ================= HASIL ================= -->
+  <div class="col-xl-5">
+    {% if hasil %}
+    <div class="panel result-card result-{{ hasil.info.warna }}" id="hasil">
+      <div class="result-top">
+        <div class="result-icon"><i class="bi {{ hasil.info.ikon }}"></i></div>
+        <div>
+          <div class="muted small">Hasil klasifikasi</div>
+          <div class="result-class">{{ hasil.kelas }}</div>
+          <div class="result-label">{{ hasil.info.label }} · diprediksi oleh {{ terpilih.nama | pendek }}</div>
+        </div>
+      </div>
+      <p class="mt-3 mb-0">{{ hasil.info.penjelasan }}</p>
+
+      {% if hasil.skor %}
+      <div class="sub-panel mt-3">
+        <div class="sub-title"><i class="bi bi-percent"></i> Probabilitas ketiga kelas (predict_proba)</div>
+        {% for s in hasil.skor %}
+        <div class="mini-row">
+          <span><span class="dot-{{ s.warna }}"></span>{{ s.label }}</span>
+          <div class="mini-bar"><div class="fill-{{ s.warna }}" style="width: {{ (s.nilai * 100) | round(2) }}%"></div></div>
+          <span class="mini-num">{{ s.nilai | persen }}</span>
+        </div>
+        {% endfor %}
+        <p class="small muted mb-0 mt-2">
+          <i class="bi bi-info-circle"></i> Skor ini sudah diberi bobot oleh
+          <code>class_weight='balanced'</code>, sehingga kelas langka terlihat lebih besar.
+          Nilai ini <strong>bukan</strong> peluang nyata di lapangan; lihat "kasus nyata"
+          di bawah untuk gambaran yang sebenarnya.
+        </p>
+      </div>
+      {% endif %}
+
+      {% if hasil.aturan %}
+      {% set p = hasil.aturan.persen_per_kelas %}
+      <div class="sub-panel mt-3">
+        <div class="sub-title"><i class="bi bi-people"></i> Kasus nyata dengan kondisi serupa (data latih)</div>
+        <p class="small muted mb-2">Dari <strong>{{ hasil.aturan.jumlah_data | ribuan }}</strong> kecelakaan yang melewati jalur pohon yang sama:</p>
+        {% for k in ['Slight Injury', 'Serious Injury', 'Fatal injury'] %}
+        <div class="mini-row">
+          <span><span class="dot-{{ info_kelas[k].warna }}"></span>{{ info_kelas[k].label }}</span>
+          <div class="mini-bar"><div class="fill-{{ info_kelas[k].warna }}" style="width: {{ p[k] | round(2) }}%"></div></div>
+          <span class="mini-num">{{ '%.1f' | format(p[k]) }}%</span>
+        </div>
+        {% endfor %}
+        {% if hasil.rasio %}
+        <p class="small mb-0 mt-2">
+          Persentase <strong>{{ hasil.kelas }}</strong> di kelompok ini
+          <strong>{{ '%.1f' | format(hasil.rasio) }}×</strong> rata-rata seluruh data
+          ({{ '%.2f' | format(hasil.persen_global[hasil.kelas]) }}%). Prediksi ini sebaiknya dibaca
+          sebagai <em>risiko {{ hasil.info.label | lower }} lebih tinggi</em>, bukan kepastian.
+        </p>
+        {% endif %}
+      </div>
+
+      <div class="sub-panel mt-3">
+        <div class="sub-title"><i class="bi bi-signpost-split"></i> Jalur keputusan pohon</div>
+        <div class="rule-box">
+          <span class="kw">IF</span>
+          {% for k in hasil.aturan.kondisi %}
+          <div class="rule-line">{% if not loop.first %}<span class="kw">AND</span> {% endif %}{{ k }}</div>
+          {% endfor %}
+          <span class="kw">THEN</span> <strong>{{ hasil.aturan.prediksi }}</strong>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+    {% else %}
+    <div class="panel empty-state">
+      <i class="bi bi-clipboard-data"></i>
+      <h3>Belum ada hasil</h3>
+      <p class="muted">Lengkapi form di samping lalu klik <strong>Klasifikasi</strong>.
+        Hasil prediksi, jalur keputusan pohon, dan skor tiap kelas akan muncul di sini.</p>
+      <div class="note">
+        <i class="bi bi-lightbulb"></i>
+        <div>{{ terpilih.nama | pendek }} memiliki balanced accuracy {{ terpilih.test.balanced_accuracy | persen }}
+        dan recall Fatal {{ terpilih.test['recall_Fatal injury'] | persen }} pada data uji.
+        Gunakan hasilnya sebagai gambaran risiko, bukan keputusan akhir.</div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

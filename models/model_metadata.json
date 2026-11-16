@@ -1,0 +1,2918 @@
+{
+  "model_terpilih": "Model C (Tuned, GridSearchCV)",
+  "slug_terpilih": "model_c",
+  "kriteria_pemilihan": "CV skor gabungan tertinggi = rata-rata CV balanced accuracy, macro F1, dan recall Fatal (5-fold, data latih)",
+  "versi_sklearn": "1.9.1",
+  "fitur_kategorikal": [
+    "Age_band_of_driver",
+    "Sex_of_driver",
+    "Driving_experience",
+    "Type_of_vehicle",
+    "Road_surface_conditions",
+    "Weather_conditions",
+    "Light_conditions",
+    "Type_of_collision",
+    "Road_surface_type",
+    "Types_of_Junction"
+  ],
+  "fitur_numerik": [
+    "Number_of_vehicles_involved"
+  ],
+  "urutan_kelas": [
+    "Slight Injury",
+    "Serious Injury",
+    "Fatal injury"
+  ],
+  "pilihan_kategori": {
+    "Age_band_of_driver": [
+      "18-30",
+      "31-50",
+      "Over 51",
+      "Under 18",
+      "Unknown"
+    ],
+    "Sex_of_driver": [
+      "Female",
+      "Male",
+      "Unknown"
+    ],
+    "Driving_experience": [
+      "1-2yr",
+      "2-5yr",
+      "5-10yr",
+      "Above 10yr",
+      "Below 1yr",
+      "No Licence",
+      "Unknown"
+    ],
+    "Type_of_vehicle": [
+      "Automobile",
+      "Bajaj",
+      "Bicycle",
+      "Long lorry",
+      "Lorry (11-40Q)",
+      "Lorry (41-100Q)",
+      "Motorcycle",
+      "Other",
+      "Pick up upto 10Q",
+      "Public (12 seats)",
+      "Public (13-45 seats)",
+      "Public (> 45 seats)",
+      "Ridden horse",
+      "Special vehicle",
+      "Stationwagen",
+      "Taxi",
+      "Turbo"
+    ],
+    "Road_surface_conditions": [
+      "Dry",
+      "Flood over 3cm. deep",
+      "Snow",
+      "Wet or damp"
+    ],
+    "Weather_conditions": [
+      "Cloudy",
+      "Fog or mist",
+      "Normal",
+      "Other",
+      "Raining",
+      "Raining and Windy",
+      "Snow",
+      "Unknown",
+      "Windy"
+    ],
+    "Light_conditions": [
+      "Darkness - lights lit",
+      "Darkness - lights unlit",
+      "Darkness - no lighting",
+      "Daylight"
+    ],
+    "Type_of_collision": [
+      "Collision with animals",
+      "Collision with pedestrians",
+      "Collision with roadside objects",
+      "Collision with roadside-parked vehicles",
+      "Fall from vehicles",
+      "Other",
+      "Rollover",
+      "Unknown",
+      "Vehicle with vehicle collision",
+      "With Train"
+    ],
+    "Road_surface_type": [
+      "Asphalt roads",
+      "Asphalt roads with some distress",
+      "Earth roads",
+      "Gravel roads",
+      "Other"
+    ],
+    "Types_of_Junction": [
+      "Crossing",
+      "No junction",
+      "O Shape",
+      "Other",
+      "T Shape",
+      "Unknown",
+      "X Shape",
+      "Y Shape"
+    ]
+  },
+  "rentang_numerik": {
+    "Number_of_vehicles_involved": {
+      "min": 1,
+      "max": 7
+    }
+  },
+  "dataset": {
+    "jumlah_baris": 12316,
+    "jumlah_fitur": 11,
+    "jumlah_kelas": 3,
+    "distribusi_kelas": {
+      "Slight Injury": 10415,
+      "Serious Injury": 1743,
+      "Fatal injury": 158
+    },
+    "jumlah_latih": 9852,
+    "jumlah_uji": 2464
+  },
+  "baseline": {
+    "accuracy": 0.8458,
+    "balanced_accuracy": 0.3333,
+    "precision_macro": 0.2819,
+    "recall_macro": 0.3333,
+    "f1_macro": 0.3055,
+    "f1_weighted": 0.7751,
+    "recall_Slight Injury": 1.0,
+    "recall_Serious Injury": 0.0,
+    "recall_Fatal injury": 0.0
+  },
+  "evaluasi": [
+    {
+      "nama": "Model A (Unpruned)",
+      "slug": "model_a",
+      "params": {
+        "criterion": "gini",
+        "max_depth": null,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "class_weight": "balanced"
+      },
+      "kedalaman": 40,
+      "jumlah_daun": 2702,
+      "cv": {
+        "balanced_accuracy": {
+          "mean": 0.3729,
+          "std": 0.0305
+        },
+        "f1_macro": {
+          "mean": 0.3563,
+          "std": 0.0198
+        },
+        "recall_fatal": {
+          "mean": 0.0865,
+          "std": 0.0663
+        }
+      },
+      "cv_gabungan": 0.2719,
+      "overfitting": {
+        "status": "kuat",
+        "gap_balanced_accuracy": 0.5705
+      },
+      "train": {
+        "accuracy": 0.884,
+        "balanced_accuracy": 0.9356,
+        "precision_macro": 0.6438,
+        "recall_macro": 0.9356,
+        "f1_macro": 0.7205,
+        "f1_weighted": 0.8968,
+        "recall_Slight Injury": 0.8741,
+        "recall_Serious Injury": 0.9326,
+        "recall_Fatal injury": 1.0
+      },
+      "test": {
+        "accuracy": 0.6936,
+        "balanced_accuracy": 0.3651,
+        "precision_macro": 0.3579,
+        "recall_macro": 0.3651,
+        "f1_macro": 0.356,
+        "f1_weighted": 0.7222,
+        "recall_Slight Injury": 0.7706,
+        "recall_Serious Injury": 0.2923,
+        "recall_Fatal injury": 0.0323
+      },
+      "classification_report_test": {
+        "Slight Injury": {
+          "precision": 0.8621,
+          "recall": 0.7706,
+          "f1-score": 0.8138,
+          "support": 2084.0
+        },
+        "Serious Injury": {
+          "precision": 0.2008,
+          "recall": 0.2923,
+          "f1-score": 0.238,
+          "support": 349.0
+        },
+        "Fatal injury": {
+          "precision": 0.0108,
+          "recall": 0.0323,
+          "f1-score": 0.0161,
+          "support": 31.0
+        },
+        "accuracy": 0.6936,
+        "macro avg": {
+          "precision": 0.3579,
+          "recall": 0.3651,
+          "f1-score": 0.356,
+          "support": 2464.0
+        },
+        "weighted avg": {
+          "precision": 0.7577,
+          "recall": 0.6936,
+          "f1-score": 0.7222,
+          "support": 2464.0
+        }
+      },
+      "confusion_matrix_test": [
+        [
+          1606,
+          399,
+          79
+        ],
+        [
+          234,
+          102,
+          13
+        ],
+        [
+          23,
+          7,
+          1
+        ]
+      ],
+      "confusion_matrix_train": [
+        [
+          7282,
+          824,
+          225
+        ],
+        [
+          58,
+          1300,
+          36
+        ],
+        [
+          0,
+          0,
+          127
+        ]
+      ]
+    },
+    {
+      "nama": "Model B (Pruned, max_depth=4)",
+      "slug": "model_b",
+      "params": {
+        "criterion": "gini",
+        "max_depth": 4,
+        "min_samples_split": 2,
+        "min_samples_leaf": 1,
+        "class_weight": "balanced"
+      },
+      "kedalaman": 4,
+      "jumlah_daun": 16,
+      "cv": {
+        "balanced_accuracy": {
+          "mean": 0.4202,
+          "std": 0.0332
+        },
+        "f1_macro": {
+          "mean": 0.3074,
+          "std": 0.0658
+        },
+        "recall_fatal": {
+          "mean": 0.4018,
+          "std": 0.0994
+        }
+      },
+      "cv_gabungan": 0.3765,
+      "overfitting": {
+        "status": "ringan",
+        "gap_balanced_accuracy": 0.0649
+      },
+      "train": {
+        "accuracy": 0.5841,
+        "balanced_accuracy": 0.4878,
+        "precision_macro": 0.3795,
+        "recall_macro": 0.4878,
+        "f1_macro": 0.3385,
+        "f1_weighted": 0.6606,
+        "recall_Slight Injury": 0.6491,
+        "recall_Serious Injury": 0.1923,
+        "recall_Fatal injury": 0.622
+      },
+      "test": {
+        "accuracy": 0.5966,
+        "balanced_accuracy": 0.4229,
+        "precision_macro": 0.3879,
+        "recall_macro": 0.4229,
+        "f1_macro": 0.3377,
+        "f1_weighted": 0.6718,
+        "recall_Slight Injury": 0.6689,
+        "recall_Serious Injury": 0.1805,
+        "recall_Fatal injury": 0.4194
+      },
+      "classification_report_test": {
+        "Slight Injury": {
+          "precision": 0.8729,
+          "recall": 0.6689,
+          "f1-score": 0.7574,
+          "support": 2084.0
+        },
+        "Serious Injury": {
+          "precision": 0.2704,
+          "recall": 0.1805,
+          "f1-score": 0.2165,
+          "support": 349.0
+        },
+        "Fatal injury": {
+          "precision": 0.0205,
+          "recall": 0.4194,
+          "f1-score": 0.0391,
+          "support": 31.0
+        },
+        "accuracy": 0.5966,
+        "macro avg": {
+          "precision": 0.3879,
+          "recall": 0.4229,
+          "f1-score": 0.3377,
+          "support": 2464.0
+        },
+        "weighted avg": {
+          "precision": 0.7768,
+          "recall": 0.5966,
+          "f1-score": 0.6718,
+          "support": 2464.0
+        }
+      },
+      "confusion_matrix_test": [
+        [
+          1394,
+          170,
+          520
+        ],
+        [
+          185,
+          63,
+          101
+        ],
+        [
+          18,
+          0,
+          13
+        ]
+      ],
+      "confusion_matrix_train": [
+        [
+          5408,
+          877,
+          2046
+        ],
+        [
+          736,
+          268,
+          390
+        ],
+        [
+          43,
+          5,
+          79
+        ]
+      ]
+    },
+    {
+      "nama": "Model C (Tuned, GridSearchCV)",
+      "slug": "model_c",
+      "params": {
+        "criterion": "entropy",
+        "max_depth": 8,
+        "min_samples_split": 100,
+        "min_samples_leaf": 20,
+        "class_weight": "balanced"
+      },
+      "kedalaman": 8,
+      "jumlah_daun": 67,
+      "cv": {
+        "balanced_accuracy": {
+          "mean": 0.4403,
+          "std": 0.0082
+        },
+        "f1_macro": {
+          "mean": 0.3157,
+          "std": 0.0301
+        },
+        "recall_fatal": {
+          "mean": 0.4938,
+          "std": 0.1325
+        }
+      },
+      "cv_gabungan": 0.4166,
+      "overfitting": {
+        "status": "ringan",
+        "gap_balanced_accuracy": 0.1115
+      },
+      "train": {
+        "accuracy": 0.5561,
+        "balanced_accuracy": 0.5478,
+        "precision_macro": 0.3826,
+        "recall_macro": 0.5478,
+        "f1_macro": 0.3554,
+        "f1_weighted": 0.6347,
+        "recall_Slight Injury": 0.5818,
+        "recall_Serious Injury": 0.3924,
+        "recall_Fatal injury": 0.6693
+      },
+      "test": {
+        "accuracy": 0.5613,
+        "balanced_accuracy": 0.4363,
+        "precision_macro": 0.3698,
+        "recall_macro": 0.4363,
+        "f1_macro": 0.3395,
+        "f1_weighted": 0.6403,
+        "recall_Slight Injury": 0.5988,
+        "recall_Serious Injury": 0.3553,
+        "recall_Fatal injury": 0.3548
+      },
+      "classification_report_test": {
+        "Slight Injury": {
+          "precision": 0.8814,
+          "recall": 0.5988,
+          "f1-score": 0.7131,
+          "support": 2084.0
+        },
+        "Serious Injury": {
+          "precision": 0.2029,
+          "recall": 0.3553,
+          "f1-score": 0.2583,
+          "support": 349.0
+        },
+        "Fatal injury": {
+          "precision": 0.0252,
+          "recall": 0.3548,
+          "f1-score": 0.047,
+          "support": 31.0
+        },
+        "accuracy": 0.5613,
+        "macro avg": {
+          "precision": 0.3698,
+          "recall": 0.4363,
+          "f1-score": 0.3395,
+          "support": 2464.0
+        },
+        "weighted avg": {
+          "precision": 0.7745,
+          "recall": 0.5613,
+          "f1-score": 0.6403,
+          "support": 2464.0
+        }
+      },
+      "confusion_matrix_test": [
+        [
+          1248,
+          481,
+          355
+        ],
+        [
+          154,
+          124,
+          71
+        ],
+        [
+          14,
+          6,
+          11
+        ]
+      ],
+      "confusion_matrix_train": [
+        [
+          4847,
+          2016,
+          1468
+        ],
+        [
+          574,
+          547,
+          273
+        ],
+        [
+          35,
+          7,
+          85
+        ]
+      ]
+    }
+  ],
+  "tuning": {
+    "param_grid": {
+      "criterion": [
+        "gini",
+        "entropy"
+      ],
+      "max_depth": [
+        3,
+        4,
+        5,
+        6,
+        8,
+        10,
+        12,
+        "None"
+      ],
+      "min_samples_split": [
+        2,
+        20,
+        50,
+        100
+      ],
+      "min_samples_leaf": [
+        1,
+        5,
+        10,
+        20,
+        50,
+        100
+      ]
+    },
+    "jumlah_kombinasi": 384,
+    "cv_folds": 5,
+    "parameter_terbaik": {
+      "criterion": "entropy",
+      "max_depth": 8,
+      "min_samples_leaf": 20,
+      "min_samples_split": 100
+    },
+    "top": [
+      {
+        "peringkat": 1,
+        "criterion": "entropy",
+        "max_depth": 8,
+        "min_samples_split": 100,
+        "min_samples_leaf": 20,
+        "cv_balanced_accuracy": 0.4403,
+        "cv_f1_macro": 0.3157,
+        "cv_recall_fatal": 0.4938,
+        "cv_recall_fatal_std": 0.1325,
+        "train_balanced_accuracy": 0.5441,
+        "skor_gabungan": 0.4166
+      },
+      {
+        "peringkat": 2,
+        "criterion": "entropy",
+        "max_depth": 12,
+        "min_samples_split": 2,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4378,
+        "cv_f1_macro": 0.2998,
+        "cv_recall_fatal": 0.5034,
+        "cv_recall_fatal_std": 0.1042,
+        "train_balanced_accuracy": 0.5728,
+        "skor_gabungan": 0.4137
+      },
+      {
+        "peringkat": 3,
+        "criterion": "entropy",
+        "max_depth": 12,
+        "min_samples_split": 20,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4378,
+        "cv_f1_macro": 0.2998,
+        "cv_recall_fatal": 0.5034,
+        "cv_recall_fatal_std": 0.1042,
+        "train_balanced_accuracy": 0.5728,
+        "skor_gabungan": 0.4137
+      },
+      {
+        "peringkat": 4,
+        "criterion": "entropy",
+        "max_depth": 12,
+        "min_samples_split": 50,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4378,
+        "cv_f1_macro": 0.2998,
+        "cv_recall_fatal": 0.5034,
+        "cv_recall_fatal_std": 0.1042,
+        "train_balanced_accuracy": 0.5728,
+        "skor_gabungan": 0.4137
+      },
+      {
+        "peringkat": 5,
+        "criterion": "entropy",
+        "max_depth": 12,
+        "min_samples_split": 100,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4378,
+        "cv_f1_macro": 0.2998,
+        "cv_recall_fatal": 0.5034,
+        "cv_recall_fatal_std": 0.1042,
+        "train_balanced_accuracy": 0.5728,
+        "skor_gabungan": 0.4137
+      },
+      {
+        "peringkat": 6,
+        "criterion": "entropy",
+        "max_depth": "None",
+        "min_samples_split": 2,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4383,
+        "cv_f1_macro": 0.2886,
+        "cv_recall_fatal": 0.5117,
+        "cv_recall_fatal_std": 0.1031,
+        "train_balanced_accuracy": 0.598,
+        "skor_gabungan": 0.4129
+      },
+      {
+        "peringkat": 7,
+        "criterion": "entropy",
+        "max_depth": "None",
+        "min_samples_split": 20,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4383,
+        "cv_f1_macro": 0.2886,
+        "cv_recall_fatal": 0.5117,
+        "cv_recall_fatal_std": 0.1031,
+        "train_balanced_accuracy": 0.598,
+        "skor_gabungan": 0.4129
+      },
+      {
+        "peringkat": 8,
+        "criterion": "entropy",
+        "max_depth": "None",
+        "min_samples_split": 50,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4383,
+        "cv_f1_macro": 0.2886,
+        "cv_recall_fatal": 0.5117,
+        "cv_recall_fatal_std": 0.1031,
+        "train_balanced_accuracy": 0.598,
+        "skor_gabungan": 0.4129
+      },
+      {
+        "peringkat": 9,
+        "criterion": "entropy",
+        "max_depth": "None",
+        "min_samples_split": 100,
+        "min_samples_leaf": 50,
+        "cv_balanced_accuracy": 0.4383,
+        "cv_f1_macro": 0.2886,
+        "cv_recall_fatal": 0.5117,
+        "cv_recall_fatal_std": 0.1031,
+        "train_balanced_accuracy": 0.598,
+        "skor_gabungan": 0.4129
+      },
+      {
+        "peringkat": 10,
+        "criterion": "entropy",
+        "max_depth": "None",
+        "min_samples_split": 100,
+        "min_samples_leaf": 20,
+        "cv_balanced_accuracy": 0.4399,
+        "cv_f1_macro": 0.2878,
+        "cv_recall_fatal": 0.5098,
+        "cv_recall_fatal_std": 0.1445,
+        "train_balanced_accuracy": 0.6379,
+        "skor_gabungan": 0.4125
+      }
+    ],
+    "kurva_kedalaman": [
+      {
+        "max_depth": 3,
+        "train_balanced_accuracy": 0.4382,
+        "cv_balanced_accuracy": 0.4012,
+        "train_f1_macro": 0.2487,
+        "cv_f1_macro": 0.2408
+      },
+      {
+        "max_depth": 4,
+        "train_balanced_accuracy": 0.4692,
+        "cv_balanced_accuracy": 0.415,
+        "train_f1_macro": 0.3253,
+        "cv_f1_macro": 0.3092
+      },
+      {
+        "max_depth": 5,
+        "train_balanced_accuracy": 0.4878,
+        "cv_balanced_accuracy": 0.4223,
+        "train_f1_macro": 0.3535,
+        "cv_f1_macro": 0.3344
+      },
+      {
+        "max_depth": 6,
+        "train_balanced_accuracy": 0.5132,
+        "cv_balanced_accuracy": 0.4408,
+        "train_f1_macro": 0.3496,
+        "cv_f1_macro": 0.3272
+      },
+      {
+        "max_depth": 8,
+        "train_balanced_accuracy": 0.5441,
+        "cv_balanced_accuracy": 0.4403,
+        "train_f1_macro": 0.347,
+        "cv_f1_macro": 0.3157
+      },
+      {
+        "max_depth": 10,
+        "train_balanced_accuracy": 0.5695,
+        "cv_balanced_accuracy": 0.428,
+        "train_f1_macro": 0.3291,
+        "cv_f1_macro": 0.2936
+      },
+      {
+        "max_depth": 12,
+        "train_balanced_accuracy": 0.5968,
+        "cv_balanced_accuracy": 0.439,
+        "train_f1_macro": 0.3475,
+        "cv_f1_macro": 0.3028
+      },
+      {
+        "max_depth": "None",
+        "train_balanced_accuracy": 0.6379,
+        "cv_balanced_accuracy": 0.4399,
+        "train_f1_macro": 0.3398,
+        "cv_f1_macro": 0.2878
+      }
+    ]
+  },
+  "interpretasi": {
+    "model_b": {
+      "nama": "Model B (Pruned, max_depth=4)",
+      "slug": "model_b",
+      "kedalaman": 4,
+      "jumlah_daun": 16,
+      "jumlah_kolom_onehot": 73,
+      "gambar_pohon": "decision_tree_model_b.png",
+      "gambar_importance": "feature_importance_model_b.png",
+      "pohon_terpotong": false,
+      "feature_importance": {
+        "Age_band_of_driver": 0.2477,
+        "Light_conditions": 0.1802,
+        "Types_of_Junction": 0.1704,
+        "Number_of_vehicles_involved": 0.151,
+        "Type_of_collision": 0.1059,
+        "Road_surface_conditions": 0.0979,
+        "Type_of_vehicle": 0.047,
+        "Driving_experience": 0.0,
+        "Sex_of_driver": 0.0,
+        "Weather_conditions": 0.0,
+        "Road_surface_type": 0.0
+      },
+      "importance_kategori": [
+        {
+          "nama": "Light_conditions = Darkness - lights lit",
+          "importance": 0.1802
+        },
+        {
+          "nama": "Number_of_vehicles_involved",
+          "importance": 0.151
+        },
+        {
+          "nama": "Age_band_of_driver = Unknown",
+          "importance": 0.1336
+        },
+        {
+          "nama": "Types_of_Junction = No junction",
+          "importance": 0.1063
+        },
+        {
+          "nama": "Road_surface_conditions = Dry",
+          "importance": 0.0979
+        },
+        {
+          "nama": "Type_of_collision = Collision with pedestrians",
+          "importance": 0.0836
+        },
+        {
+          "nama": "Age_band_of_driver = Over 51",
+          "importance": 0.0633
+        },
+        {
+          "nama": "Age_band_of_driver = Under 18",
+          "importance": 0.0508
+        },
+        {
+          "nama": "Type_of_vehicle = Lorry (41-100Q)",
+          "importance": 0.0373
+        },
+        {
+          "nama": "Types_of_Junction = Crossing",
+          "importance": 0.0343
+        },
+        {
+          "nama": "Types_of_Junction = Y Shape",
+          "importance": 0.0298
+        },
+        {
+          "nama": "Type_of_collision = Collision with roadside objects",
+          "importance": 0.0223
+        },
+        {
+          "nama": "Type_of_vehicle = Stationwagen",
+          "importance": 0.0097
+        }
+      ],
+      "contoh_aturan": [
+        {
+          "leaf": 19,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 4798,
+          "jumlah_per_kelas": {
+            "Slight Injury": 4153,
+            "Serious Injury": 606,
+            "Fatal injury": 39
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 86.5569,
+            "Serious Injury": 12.6303,
+            "Fatal injury": 0.8128
+          },
+          "penjelasan": "Dari 4798 kecelakaan di data latih yang memenuhi kondisi ini, 86.6% luka ringan, 12.6% luka serius, dan 0.8% fatal. Kelompok ini didominasi luka ringan, sehingga model memprediksi Slight Injury."
+        },
+        {
+          "leaf": 4,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51)"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 944,
+          "jumlah_per_kelas": {
+            "Slight Injury": 725,
+            "Serious Injury": 215,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 76.8008,
+            "Serious Injury": 22.7754,
+            "Fatal injury": 0.4237
+          },
+          "penjelasan": "Dari 944 kecelakaan di data latih yang memenuhi kondisi ini, 76.8% luka ringan, 22.8% luka serius, dan 0.4% fatal. Persentase Serious Injury di kelompok ini 1.6 kali lipat dari rata-rata seluruh data (14.15%). Karena class_weight='balanced' memberi bobot lebih besar pada kelas langka, model memprediksi Serious Injury walaupun mayoritas kecelakaan di kelompok ini tetap luka ringan. Artinya, prediksi ini lebih tepat dibaca sebagai 'risiko Serious Injury lebih tinggi'."
+        },
+        {
+          "leaf": 23,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 1514,
+          "jumlah_per_kelas": {
+            "Slight Injury": 1301,
+            "Serious Injury": 177,
+            "Fatal injury": 36
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 85.9313,
+            "Serious Injury": 11.6909,
+            "Fatal injury": 2.3778
+          },
+          "penjelasan": "Dari 1514 kecelakaan di data latih yang memenuhi kondisi ini, 85.9% luka ringan, 11.7% luka serius, dan 2.4% fatal. Persentase Fatal injury di kelompok ini 1.8 kali lipat dari rata-rata seluruh data (1.29%). Karena class_weight='balanced' memberi bobot lebih besar pada kelas langka, model memprediksi Fatal injury walaupun mayoritas kecelakaan di kelompok ini tetap luka ringan. Artinya, prediksi ini lebih tepat dibaca sebagai 'risiko Fatal injury lebih tinggi'."
+        }
+      ],
+      "semua_aturan": [
+        {
+          "leaf": 19,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 4798,
+          "jumlah_per_kelas": {
+            "Slight Injury": 4153,
+            "Serious Injury": 606,
+            "Fatal injury": 39
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 86.5569,
+            "Serious Injury": 12.6303,
+            "Fatal injury": 0.8128
+          }
+        },
+        {
+          "leaf": 23,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 1514,
+          "jumlah_per_kelas": {
+            "Slight Injury": 1301,
+            "Serious Injury": 177,
+            "Fatal injury": 36
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 85.9313,
+            "Serious Injury": 11.6909,
+            "Fatal injury": 2.3778
+          }
+        },
+        {
+          "leaf": 4,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51)"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 944,
+          "jumlah_per_kelas": {
+            "Slight Injury": 725,
+            "Serious Injury": 215,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 76.8008,
+            "Serious Injury": 22.7754,
+            "Fatal injury": 0.4237
+          }
+        },
+        {
+          "leaf": 26,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 795,
+          "jumlah_per_kelas": {
+            "Slight Injury": 737,
+            "Serious Injury": 58,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 92.7044,
+            "Serious Injury": 7.2956,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 22,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 549,
+          "jumlah_per_kelas": {
+            "Slight Injury": 473,
+            "Serious Injury": 72,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 86.1566,
+            "Serious Injury": 13.1148,
+            "Fatal injury": 0.7286
+          }
+        },
+        {
+          "leaf": 20,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision = Collision with pedestrians"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 375,
+          "jumlah_per_kelas": {
+            "Slight Injury": 320,
+            "Serious Injury": 45,
+            "Fatal injury": 10
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 85.3333,
+            "Serious Injury": 12.0,
+            "Fatal injury": 2.6667
+          }
+        },
+        {
+          "leaf": 12,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions = Dry"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 260,
+          "jumlah_per_kelas": {
+            "Slight Injury": 174,
+            "Serious Injury": 67,
+            "Fatal injury": 19
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 66.9231,
+            "Serious Injury": 25.7692,
+            "Fatal injury": 7.3077
+          }
+        },
+        {
+          "leaf": 5,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Over 51"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 172,
+          "jumlah_per_kelas": {
+            "Slight Injury": 124,
+            "Serious Injury": 43,
+            "Fatal injury": 5
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 72.093,
+            "Serious Injury": 25.0,
+            "Fatal injury": 2.907
+          }
+        },
+        {
+          "leaf": 11,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions bukan Dry"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 154,
+          "jumlah_per_kelas": {
+            "Slight Injury": 100,
+            "Serious Injury": 49,
+            "Fatal injury": 5
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 64.9351,
+            "Serious Injury": 31.8182,
+            "Fatal injury": 3.2468
+          }
+        },
+        {
+          "leaf": 29,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Collision with roadside objects",
+            "Type_of_vehicle bukan Lorry (41-100Q)"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 120,
+          "jumlah_per_kelas": {
+            "Slight Injury": 100,
+            "Serious Injury": 20,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 83.3333,
+            "Serious Injury": 16.6667,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 27,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle = Stationwagen"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 45,
+          "jumlah_per_kelas": {
+            "Slight Injury": 45,
+            "Serious Injury": 0,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 100.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 14,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction = Crossing",
+            "Type_of_vehicle bukan Stationwagen"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 43,
+          "jumlah_per_kelas": {
+            "Slight Injury": 36,
+            "Serious Injury": 7,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 83.7209,
+            "Serious Injury": 16.2791,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 7,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction bukan Y Shape"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 40,
+          "jumlah_per_kelas": {
+            "Slight Injury": 16,
+            "Serious Injury": 23,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 40.0,
+            "Serious Injury": 57.5,
+            "Fatal injury": 2.5
+          }
+        },
+        {
+          "leaf": 8,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction = Y Shape"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 20,
+          "jumlah_per_kelas": {
+            "Slight Injury": 8,
+            "Serious Injury": 9,
+            "Fatal injury": 3
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 40.0,
+            "Serious Injury": 45.0,
+            "Fatal injury": 15.0
+          }
+        },
+        {
+          "leaf": 30,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Collision with roadside objects",
+            "Type_of_vehicle = Lorry (41-100Q)"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 20,
+          "jumlah_per_kelas": {
+            "Slight Injury": 19,
+            "Serious Injury": 0,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 95.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 5.0
+          }
+        },
+        {
+          "leaf": 15,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction = Crossing",
+            "Type_of_vehicle = Stationwagen"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 3,
+          "jumlah_per_kelas": {
+            "Slight Injury": 0,
+            "Serious Injury": 3,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 0.0,
+            "Serious Injury": 100.0,
+            "Fatal injury": 0.0
+          }
+        }
+      ]
+    },
+    "model_c": {
+      "nama": "Model C (Tuned, GridSearchCV)",
+      "slug": "model_c",
+      "kedalaman": 8,
+      "jumlah_daun": 67,
+      "jumlah_kolom_onehot": 73,
+      "gambar_pohon": "decision_tree_model_c.png",
+      "gambar_importance": "feature_importance_model_c.png",
+      "pohon_terpotong": true,
+      "feature_importance": {
+        "Age_band_of_driver": 0.2286,
+        "Light_conditions": 0.1334,
+        "Type_of_collision": 0.115,
+        "Number_of_vehicles_involved": 0.11,
+        "Type_of_vehicle": 0.1064,
+        "Driving_experience": 0.0897,
+        "Types_of_Junction": 0.0627,
+        "Road_surface_conditions": 0.0579,
+        "Weather_conditions": 0.0547,
+        "Road_surface_type": 0.0401,
+        "Sex_of_driver": 0.0015
+      },
+      "importance_kategori": [
+        {
+          "nama": "Number_of_vehicles_involved",
+          "importance": 0.11
+        },
+        {
+          "nama": "Light_conditions = Darkness - lights lit",
+          "importance": 0.0909
+        },
+        {
+          "nama": "Age_band_of_driver = Unknown",
+          "importance": 0.0796
+        },
+        {
+          "nama": "Age_band_of_driver = Under 18",
+          "importance": 0.0726
+        },
+        {
+          "nama": "Road_surface_conditions = Dry",
+          "importance": 0.05
+        },
+        {
+          "nama": "Type_of_collision = Collision with pedestrians",
+          "importance": 0.0495
+        },
+        {
+          "nama": "Weather_conditions = Raining",
+          "importance": 0.0474
+        },
+        {
+          "nama": "Types_of_Junction = No junction",
+          "importance": 0.0439
+        },
+        {
+          "nama": "Type_of_collision = Vehicle with vehicle collision",
+          "importance": 0.0433
+        },
+        {
+          "nama": "Type_of_vehicle = Automobile",
+          "importance": 0.0428
+        },
+        {
+          "nama": "Road_surface_type = Asphalt roads",
+          "importance": 0.0401
+        },
+        {
+          "nama": "Driving_experience = Below 1yr",
+          "importance": 0.0396
+        },
+        {
+          "nama": "Type_of_vehicle = Lorry (41-100Q)",
+          "importance": 0.0338
+        },
+        {
+          "nama": "Age_band_of_driver = Over 51",
+          "importance": 0.0327
+        },
+        {
+          "nama": "Light_conditions = Darkness - no lighting",
+          "importance": 0.0286
+        }
+      ],
+      "contoh_aturan": [
+        {
+          "leaf": 56,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type = Asphalt roads",
+            "Light_conditions bukan Darkness - no lighting",
+            "Driving_experience bukan Below 1yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 3637,
+          "jumlah_per_kelas": {
+            "Slight Injury": 3171,
+            "Serious Injury": 432,
+            "Fatal injury": 34
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 87.1872,
+            "Serious Injury": 11.8779,
+            "Fatal injury": 0.9348
+          },
+          "penjelasan": "Dari 3637 kecelakaan di data latih yang memenuhi kondisi ini, 87.2% luka ringan, 11.9% luka serius, dan 0.9% fatal. Kelompok ini didominasi luka ringan, sehingga model memprediksi Slight Injury."
+        },
+        {
+          "leaf": 16,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51, Unknown)",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Type_of_vehicle bukan Other",
+            "Weather_conditions = Normal"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 427,
+          "jumlah_per_kelas": {
+            "Slight Injury": 318,
+            "Serious Injury": 109,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 74.4731,
+            "Serious Injury": 25.5269,
+            "Fatal injury": 0.0
+          },
+          "penjelasan": "Dari 427 kecelakaan di data latih yang memenuhi kondisi ini, 74.5% luka ringan, 25.5% luka serius, dan 0.0% fatal. Persentase Serious Injury di kelompok ini 1.8 kali lipat dari rata-rata seluruh data (14.15%). Karena class_weight='balanced' memberi bobot lebih besar pada kelas langka, model memprediksi Serious Injury walaupun mayoritas kecelakaan di kelompok ini tetap luka ringan. Artinya, prediksi ini lebih tepat dibaca sebagai 'risiko Serious Injury lebih tinggi'."
+        },
+        {
+          "leaf": 93,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, 31-50)",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience bukan Below 1yr",
+            "Type_of_vehicle bukan Automobile"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 434,
+          "jumlah_per_kelas": {
+            "Slight Injury": 368,
+            "Serious Injury": 58,
+            "Fatal injury": 8
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.7926,
+            "Serious Injury": 13.3641,
+            "Fatal injury": 1.8433
+          },
+          "penjelasan": "Dari 434 kecelakaan di data latih yang memenuhi kondisi ini, 84.8% luka ringan, 13.4% luka serius, dan 1.8% fatal. Persentase Fatal injury di kelompok ini 1.4 kali lipat dari rata-rata seluruh data (1.29%). Karena class_weight='balanced' memberi bobot lebih besar pada kelas langka, model memprediksi Fatal injury walaupun mayoritas kecelakaan di kelompok ini tetap luka ringan. Artinya, prediksi ini lebih tepat dibaca sebagai 'risiko Fatal injury lebih tinggi'."
+        }
+      ],
+      "semua_aturan": [
+        {
+          "leaf": 56,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type = Asphalt roads",
+            "Light_conditions bukan Darkness - no lighting",
+            "Driving_experience bukan Below 1yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 3637,
+          "jumlah_per_kelas": {
+            "Slight Injury": 3171,
+            "Serious Injury": 432,
+            "Fatal injury": 34
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 87.1872,
+            "Serious Injury": 11.8779,
+            "Fatal injury": 0.9348
+          }
+        },
+        {
+          "leaf": 93,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, 31-50)",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience bukan Below 1yr",
+            "Type_of_vehicle bukan Automobile"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 434,
+          "jumlah_per_kelas": {
+            "Slight Injury": 368,
+            "Serious Injury": 58,
+            "Fatal injury": 8
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.7926,
+            "Serious Injury": 13.3641,
+            "Fatal injury": 1.8433
+          }
+        },
+        {
+          "leaf": 16,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51, Unknown)",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Type_of_vehicle bukan Other",
+            "Weather_conditions = Normal"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 427,
+          "jumlah_per_kelas": {
+            "Slight Injury": 318,
+            "Serious Injury": 109,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 74.4731,
+            "Serious Injury": 25.5269,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 57,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type = Asphalt roads",
+            "Light_conditions bukan Darkness - no lighting",
+            "Driving_experience = Below 1yr"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 424,
+          "jumlah_per_kelas": {
+            "Slight Injury": 361,
+            "Serious Injury": 62,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 85.1415,
+            "Serious Injury": 14.6226,
+            "Fatal injury": 0.2358
+          }
+        },
+        {
+          "leaf": 96,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = 31-50",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience bukan Below 1yr",
+            "Type_of_collision bukan Collision with pedestrians"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 423,
+          "jumlah_per_kelas": {
+            "Slight Injury": 371,
+            "Serious Injury": 41,
+            "Fatal injury": 11
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 87.7069,
+            "Serious Injury": 9.6927,
+            "Fatal injury": 2.6005
+          }
+        },
+        {
+          "leaf": 118,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver bukan Female",
+            "Road_surface_type = Asphalt roads"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 324,
+          "jumlah_per_kelas": {
+            "Slight Injury": 306,
+            "Serious Injury": 18,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 94.4444,
+            "Serious Injury": 5.5556,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 94,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, 31-50)",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience bukan Below 1yr",
+            "Type_of_vehicle = Automobile"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 216,
+          "jumlah_per_kelas": {
+            "Slight Injury": 194,
+            "Serious Injury": 22,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 89.8148,
+            "Serious Injury": 10.1852,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 51,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan (No junction, Crossing)",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type bukan Asphalt roads",
+            "Weather_conditions bukan Raining"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 194,
+          "jumlah_per_kelas": {
+            "Slight Injury": 153,
+            "Serious Injury": 41,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 78.866,
+            "Serious Injury": 21.134,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 71,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction bukan (No junction, Other)",
+            "Weather_conditions = Normal",
+            "Driving_experience bukan 2-5yr"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 187,
+          "jumlah_per_kelas": {
+            "Slight Injury": 153,
+            "Serious Injury": 34,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 81.8182,
+            "Serious Injury": 18.1818,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 63,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision = Collision with pedestrians",
+            "Road_surface_conditions = Dry",
+            "Driving_experience bukan Above 10yr"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 175,
+          "jumlah_per_kelas": {
+            "Slight Injury": 148,
+            "Serious Injury": 22,
+            "Fatal injury": 5
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.5714,
+            "Serious Injury": 12.5714,
+            "Fatal injury": 2.8571
+          }
+        },
+        {
+          "leaf": 106,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions = Darkness - lights lit",
+            "Driving_experience bukan 1-2yr",
+            "Type_of_vehicle bukan Lorry (41-100Q)"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 168,
+          "jumlah_per_kelas": {
+            "Slight Injury": 127,
+            "Serious Injury": 27,
+            "Fatal injury": 14
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 75.5952,
+            "Serious Injury": 16.0714,
+            "Fatal injury": 8.3333
+          }
+        },
+        {
+          "leaf": 80,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions bukan (Raining, Other)",
+            "Type_of_vehicle bukan Other",
+            "Light_conditions bukan Darkness - lights lit"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 144,
+          "jumlah_per_kelas": {
+            "Slight Injury": 113,
+            "Serious Injury": 31,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 78.4722,
+            "Serious Injury": 21.5278,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 9,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51, 18-30)",
+            "Type_of_collision bukan Vehicle with vehicle collision",
+            "Road_surface_type = Asphalt roads",
+            "Driving_experience bukan Above 10yr"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 112,
+          "jumlah_per_kelas": {
+            "Slight Injury": 83,
+            "Serious Injury": 29,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 74.1071,
+            "Serious Injury": 25.8929,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 81,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions bukan (Raining, Other)",
+            "Type_of_vehicle bukan Other",
+            "Light_conditions = Darkness - lights lit"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 102,
+          "jumlah_per_kelas": {
+            "Slight Injury": 90,
+            "Serious Injury": 12,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 88.2353,
+            "Serious Injury": 11.7647,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 126,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 3",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver = Female"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 99,
+          "jumlah_per_kelas": {
+            "Slight Injury": 95,
+            "Serious Injury": 4,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 95.9596,
+            "Serious Injury": 4.0404,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 130,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Collision with roadside objects",
+            "Type_of_vehicle bukan Lorry (41-100Q)",
+            "Types_of_Junction bukan Crossing"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 99,
+          "jumlah_per_kelas": {
+            "Slight Injury": 84,
+            "Serious Injury": 15,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.8485,
+            "Serious Injury": 15.1515,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 17,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Type_of_vehicle bukan Other",
+            "Weather_conditions = Normal"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 97,
+          "jumlah_per_kelas": {
+            "Slight Injury": 80,
+            "Serious Injury": 17,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 82.4742,
+            "Serious Injury": 17.5258,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 87,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, 18-30)",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions = Raining",
+            "Light_conditions = Daylight"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 95,
+          "jumlah_per_kelas": {
+            "Slight Injury": 82,
+            "Serious Injury": 12,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 86.3158,
+            "Serious Injury": 12.6316,
+            "Fatal injury": 1.0526
+          }
+        },
+        {
+          "leaf": 119,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 3",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver bukan Female"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 94,
+          "jumlah_per_kelas": {
+            "Slight Injury": 84,
+            "Serious Injury": 10,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 89.3617,
+            "Serious Injury": 10.6383,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 14,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51)",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Type_of_vehicle bukan Other",
+            "Weather_conditions bukan Normal"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 93,
+          "jumlah_per_kelas": {
+            "Slight Injury": 79,
+            "Serious Injury": 14,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.9462,
+            "Serious Injury": 15.0538,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 42,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions = Dry",
+            "Type_of_vehicle = Automobile"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 92,
+          "jumlah_per_kelas": {
+            "Slight Injury": 66,
+            "Serious Injury": 24,
+            "Fatal injury": 2
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 71.7391,
+            "Serious Injury": 26.087,
+            "Fatal injury": 2.1739
+          }
+        },
+        {
+          "leaf": 11,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = 18-30",
+            "Type_of_collision bukan Vehicle with vehicle collision",
+            "Road_surface_type = Asphalt roads"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 88,
+          "jumlah_per_kelas": {
+            "Slight Injury": 63,
+            "Serious Injury": 23,
+            "Fatal injury": 2
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 71.5909,
+            "Serious Injury": 26.1364,
+            "Fatal injury": 2.2727
+          }
+        },
+        {
+          "leaf": 38,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions = Dry",
+            "Type_of_vehicle bukan Automobile",
+            "Driving_experience bukan (1-2yr, 2-5yr)",
+            "Age_band_of_driver bukan Unknown"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 88,
+          "jumlah_per_kelas": {
+            "Slight Injury": 57,
+            "Serious Injury": 24,
+            "Fatal injury": 7
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 64.7727,
+            "Serious Injury": 27.2727,
+            "Fatal injury": 7.9545
+          }
+        },
+        {
+          "leaf": 23,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Over 51",
+            "Driving_experience bukan Above 10yr",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Road_surface_conditions bukan Wet or damp"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 87,
+          "jumlah_per_kelas": {
+            "Slight Injury": 69,
+            "Serious Injury": 16,
+            "Fatal injury": 2
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 79.3103,
+            "Serious Injury": 18.3908,
+            "Fatal injury": 2.2989
+          }
+        },
+        {
+          "leaf": 18,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51)",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Type_of_vehicle = Other"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 83,
+          "jumlah_per_kelas": {
+            "Slight Injury": 65,
+            "Serious Injury": 17,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 78.3133,
+            "Serious Injury": 20.4819,
+            "Fatal injury": 1.2048
+          }
+        },
+        {
+          "leaf": 67,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction bukan No junction",
+            "Weather_conditions bukan Normal"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 82,
+          "jumlah_per_kelas": {
+            "Slight Injury": 75,
+            "Serious Injury": 7,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 91.4634,
+            "Serious Injury": 8.5366,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 124,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver = Female",
+            "Light_conditions = Daylight",
+            "Driving_experience bukan 5-10yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 80,
+          "jumlah_per_kelas": {
+            "Slight Injury": 71,
+            "Serious Injury": 9,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 88.75,
+            "Serious Injury": 11.25,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 100,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience = Below 1yr",
+            "Type_of_vehicle bukan Lorry (41-100Q)"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 79,
+          "jumlah_per_kelas": {
+            "Slight Injury": 65,
+            "Serious Injury": 14,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 82.2785,
+            "Serious Injury": 17.7215,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 52,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction = Crossing",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type bukan Asphalt roads",
+            "Weather_conditions bukan Raining"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 76,
+          "jumlah_per_kelas": {
+            "Slight Injury": 69,
+            "Serious Injury": 7,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 90.7895,
+            "Serious Injury": 9.2105,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 122,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver = Female",
+            "Light_conditions bukan Daylight"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 76,
+          "jumlah_per_kelas": {
+            "Slight Injury": 62,
+            "Serious Injury": 14,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 81.5789,
+            "Serious Injury": 18.4211,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 85,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions = Raining",
+            "Light_conditions bukan Daylight"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 67,
+          "jumlah_per_kelas": {
+            "Slight Injury": 58,
+            "Serious Injury": 9,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 86.5672,
+            "Serious Injury": 13.4328,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 65,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 3",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision = Collision with pedestrians"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 65,
+          "jumlah_per_kelas": {
+            "Slight Injury": 55,
+            "Serious Injury": 10,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.6154,
+            "Serious Injury": 15.3846,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 61,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision = Collision with pedestrians",
+            "Road_surface_conditions bukan Dry"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 64,
+          "jumlah_per_kelas": {
+            "Slight Injury": 57,
+            "Serious Injury": 2,
+            "Fatal injury": 5
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 89.0625,
+            "Serious Injury": 3.125,
+            "Fatal injury": 7.8125
+          }
+        },
+        {
+          "leaf": 88,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = 18-30",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions = Raining",
+            "Light_conditions = Daylight"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 64,
+          "jumlah_per_kelas": {
+            "Slight Injury": 54,
+            "Serious Injury": 7,
+            "Fatal injury": 3
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 84.375,
+            "Serious Injury": 10.9375,
+            "Fatal injury": 4.6875
+          }
+        },
+        {
+          "leaf": 32,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions bukan Dry",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Weather_conditions bukan Raining"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 63,
+          "jumlah_per_kelas": {
+            "Slight Injury": 43,
+            "Serious Injury": 19,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 68.254,
+            "Serious Injury": 30.1587,
+            "Fatal injury": 1.5873
+          }
+        },
+        {
+          "leaf": 58,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type = Asphalt roads",
+            "Light_conditions = Darkness - no lighting"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 62,
+          "jumlah_per_kelas": {
+            "Slight Injury": 49,
+            "Serious Injury": 9,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 79.0323,
+            "Serious Injury": 14.5161,
+            "Fatal injury": 6.4516
+          }
+        },
+        {
+          "leaf": 26,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Under 18"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 60,
+          "jumlah_per_kelas": {
+            "Slight Injury": 24,
+            "Serious Injury": 32,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 40.0,
+            "Serious Injury": 53.3333,
+            "Fatal injury": 6.6667
+          }
+        },
+        {
+          "leaf": 73,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction bukan No junction",
+            "Weather_conditions = Normal",
+            "Driving_experience = 2-5yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 60,
+          "jumlah_per_kelas": {
+            "Slight Injury": 55,
+            "Serious Injury": 5,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 91.6667,
+            "Serious Injury": 8.3333,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 74,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 3",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction bukan No junction",
+            "Weather_conditions = Normal"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 58,
+          "jumlah_per_kelas": {
+            "Slight Injury": 43,
+            "Serious Injury": 15,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 74.1379,
+            "Serious Injury": 25.8621,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 109,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 3",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions = Darkness - lights lit"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 54,
+          "jumlah_per_kelas": {
+            "Slight Injury": 48,
+            "Serious Injury": 6,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 88.8889,
+            "Serious Injury": 11.1111,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 33,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions bukan Dry",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Weather_conditions = Raining"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 52,
+          "jumlah_per_kelas": {
+            "Slight Injury": 33,
+            "Serious Injury": 15,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 63.4615,
+            "Serious Injury": 28.8462,
+            "Fatal injury": 7.6923
+          }
+        },
+        {
+          "leaf": 117,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan (Collision with roadside objects, Vehicle with vehicle collision)",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver bukan Female",
+            "Road_surface_type = Asphalt roads"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 52,
+          "jumlah_per_kelas": {
+            "Slight Injury": 51,
+            "Serious Injury": 1,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 98.0769,
+            "Serious Injury": 1.9231,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 43,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction = Crossing"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 46,
+          "jumlah_per_kelas": {
+            "Slight Injury": 36,
+            "Serious Injury": 10,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 78.2609,
+            "Serious Injury": 21.7391,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 125,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver = Female",
+            "Light_conditions = Daylight",
+            "Driving_experience = 5-10yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 45,
+          "jumlah_per_kelas": {
+            "Slight Injury": 43,
+            "Serious Injury": 2,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 95.5556,
+            "Serious Injury": 4.4444,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 127,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle = Stationwagen"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 45,
+          "jumlah_per_kelas": {
+            "Slight Injury": 45,
+            "Serious Injury": 0,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 100.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 30,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions bukan Dry",
+            "Type_of_collision bukan Vehicle with vehicle collision"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 39,
+          "jumlah_per_kelas": {
+            "Slight Injury": 24,
+            "Serious Injury": 15,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 61.5385,
+            "Serious Injury": 38.4615,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 83,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions = Other"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 39,
+          "jumlah_per_kelas": {
+            "Slight Injury": 39,
+            "Serious Injury": 0,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 100.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 82,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions bukan Dry",
+            "Weather_conditions bukan (Raining, Other)",
+            "Type_of_vehicle = Other"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 38,
+          "jumlah_per_kelas": {
+            "Slight Injury": 37,
+            "Serious Injury": 1,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 97.3684,
+            "Serious Injury": 2.6316,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 108,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions = Darkness - lights lit",
+            "Driving_experience = 1-2yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 38,
+          "jumlah_per_kelas": {
+            "Slight Injury": 34,
+            "Serious Injury": 4,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 89.4737,
+            "Serious Injury": 10.5263,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 21,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Over 51",
+            "Driving_experience bukan Above 10yr",
+            "Type_of_collision bukan Vehicle with vehicle collision"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 35,
+          "jumlah_per_kelas": {
+            "Slight Injury": 22,
+            "Serious Injury": 13,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 62.8571,
+            "Serious Injury": 37.1429,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 40,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions = Dry",
+            "Type_of_vehicle bukan Automobile",
+            "Driving_experience = 2-5yr"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 34,
+          "jumlah_per_kelas": {
+            "Slight Injury": 17,
+            "Serious Injury": 11,
+            "Fatal injury": 6
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 50.0,
+            "Serious Injury": 32.3529,
+            "Fatal injury": 17.6471
+          }
+        },
+        {
+          "leaf": 64,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision = Collision with pedestrians",
+            "Road_surface_conditions = Dry",
+            "Driving_experience = Above 10yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 32,
+          "jumlah_per_kelas": {
+            "Slight Injury": 30,
+            "Serious Injury": 2,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 93.75,
+            "Serious Injury": 6.25,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 53,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan (Unknown, Under 18)",
+            "Types_of_Junction bukan No junction",
+            "Type_of_collision bukan Collision with pedestrians",
+            "Road_surface_type bukan Asphalt roads",
+            "Weather_conditions = Raining"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 29,
+          "jumlah_per_kelas": {
+            "Slight Injury": 29,
+            "Serious Injury": 0,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 100.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 72,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Under 18",
+            "Types_of_Junction = Other",
+            "Weather_conditions = Normal",
+            "Driving_experience bukan 2-5yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 28,
+          "jumlah_per_kelas": {
+            "Slight Injury": 25,
+            "Serious Injury": 3,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 89.2857,
+            "Serious Injury": 10.7143,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 107,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions = Darkness - lights lit",
+            "Driving_experience bukan 1-2yr",
+            "Type_of_vehicle = Lorry (41-100Q)"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 28,
+          "jumlah_per_kelas": {
+            "Slight Injury": 26,
+            "Serious Injury": 2,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 92.8571,
+            "Serious Injury": 7.1429,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 101,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 3",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience = Below 1yr",
+            "Type_of_vehicle bukan Lorry (41-100Q)"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 27,
+          "jumlah_per_kelas": {
+            "Slight Injury": 25,
+            "Serious Injury": 2,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 92.5926,
+            "Serious Injury": 7.4074,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 25,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Over 51",
+            "Driving_experience = Above 10yr"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 26,
+          "jumlah_per_kelas": {
+            "Slight Injury": 19,
+            "Serious Injury": 4,
+            "Fatal injury": 3
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 73.0769,
+            "Serious Injury": 15.3846,
+            "Fatal injury": 11.5385
+          }
+        },
+        {
+          "leaf": 97,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = 31-50",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience bukan Below 1yr",
+            "Type_of_collision = Collision with pedestrians"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 26,
+          "jumlah_per_kelas": {
+            "Slight Injury": 23,
+            "Serious Injury": 0,
+            "Fatal injury": 3
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 88.4615,
+            "Serious Injury": 0.0,
+            "Fatal injury": 11.5385
+          }
+        },
+        {
+          "leaf": 115,
+          "kondisi": [
+            "2 <= Number_of_vehicles_involved <= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision bukan Collision with roadside objects",
+            "Type_of_vehicle bukan Stationwagen",
+            "Sex_of_driver bukan Female",
+            "Road_surface_type bukan Asphalt roads"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 25,
+          "jumlah_per_kelas": {
+            "Slight Injury": 25,
+            "Serious Injury": 0,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 100.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 24,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver = Over 51",
+            "Driving_experience bukan Above 10yr",
+            "Type_of_collision = Vehicle with vehicle collision",
+            "Road_surface_conditions = Wet or damp"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 24,
+          "jumlah_per_kelas": {
+            "Slight Injury": 14,
+            "Serious Injury": 10,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 58.3333,
+            "Serious Injury": 41.6667,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 39,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions = Dry",
+            "Type_of_vehicle bukan Automobile",
+            "Driving_experience bukan (1-2yr, 2-5yr)",
+            "Age_band_of_driver = Unknown"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 24,
+          "jumlah_per_kelas": {
+            "Slight Injury": 18,
+            "Serious Injury": 6,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 75.0,
+            "Serious Injury": 25.0,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 10,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51, 18-30)",
+            "Type_of_collision bukan Vehicle with vehicle collision",
+            "Road_surface_type = Asphalt roads",
+            "Driving_experience = Above 10yr"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 23,
+          "jumlah_per_kelas": {
+            "Slight Injury": 20,
+            "Serious Injury": 3,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 86.9565,
+            "Serious Injury": 13.0435,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 41,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions = Darkness - lights lit",
+            "Types_of_Junction bukan Crossing",
+            "Road_surface_conditions = Dry",
+            "Type_of_vehicle bukan Automobile",
+            "Driving_experience = 1-2yr"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 22,
+          "jumlah_per_kelas": {
+            "Slight Injury": 16,
+            "Serious Injury": 2,
+            "Fatal injury": 4
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 72.7273,
+            "Serious Injury": 9.0909,
+            "Fatal injury": 18.1818
+          }
+        },
+        {
+          "leaf": 6,
+          "kondisi": [
+            "Number_of_vehicles_involved <= 1",
+            "Light_conditions bukan Darkness - lights lit",
+            "Age_band_of_driver bukan (Under 18, Over 51)",
+            "Type_of_collision bukan Vehicle with vehicle collision",
+            "Road_surface_type bukan Asphalt roads"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 21,
+          "jumlah_per_kelas": {
+            "Slight Injury": 17,
+            "Serious Injury": 3,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 80.9524,
+            "Serious Injury": 14.2857,
+            "Fatal injury": 4.7619
+          }
+        },
+        {
+          "leaf": 102,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver bukan Unknown",
+            "Types_of_Junction = No junction",
+            "Road_surface_conditions = Dry",
+            "Light_conditions bukan Darkness - lights lit",
+            "Driving_experience = Below 1yr",
+            "Type_of_vehicle = Lorry (41-100Q)"
+          ],
+          "prediksi": "Slight Injury",
+          "jumlah_data": 21,
+          "jumlah_per_kelas": {
+            "Slight Injury": 20,
+            "Serious Injury": 1,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 95.2381,
+            "Serious Injury": 4.7619,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 131,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Collision with roadside objects",
+            "Type_of_vehicle bukan Lorry (41-100Q)",
+            "Types_of_Junction = Crossing"
+          ],
+          "prediksi": "Serious Injury",
+          "jumlah_data": 21,
+          "jumlah_per_kelas": {
+            "Slight Injury": 16,
+            "Serious Injury": 5,
+            "Fatal injury": 0
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 76.1905,
+            "Serious Injury": 23.8095,
+            "Fatal injury": 0.0
+          }
+        },
+        {
+          "leaf": 132,
+          "kondisi": [
+            "Number_of_vehicles_involved >= 2",
+            "Age_band_of_driver = Unknown",
+            "Type_of_collision = Collision with roadside objects",
+            "Type_of_vehicle = Lorry (41-100Q)"
+          ],
+          "prediksi": "Fatal injury",
+          "jumlah_data": 20,
+          "jumlah_per_kelas": {
+            "Slight Injury": 19,
+            "Serious Injury": 0,
+            "Fatal injury": 1
+          },
+          "persen_per_kelas": {
+            "Slight Injury": 95.0,
+            "Serious Injury": 0.0,
+            "Fatal injury": 5.0
+          }
+        }
+      ]
+    }
+  },
+  "persen_global_latih": {
+    "Slight Injury": 84.5615,
+    "Serious Injury": 14.1494,
+    "Fatal injury": 1.2891
+  }
+}
